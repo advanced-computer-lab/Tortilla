@@ -15,8 +15,13 @@ mongoose.connect(process.env.MongoURI, { useNewUrlParser: true, useUnifiedTopolo
   .then(result => console.log("MongoDB is now connected"))
   .catch(err => console.log(err));
 
-app.get('/bookFlight', (req, res) => {
+app.get('/bookFlight', async (req, res) => {
 
+  const bookedFlightId = req.body.id;
+
+  const bookedFlight = await flight.findOne({ _id: ObjectId(bookedFlightId) })
+
+  
 
 });  
 

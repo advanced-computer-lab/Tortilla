@@ -10,7 +10,6 @@ import UserSearch from './Component/User/UserSearch';
 
 function App() {
 
-
   return (
     <div className="App">
       <BrowserRouter>

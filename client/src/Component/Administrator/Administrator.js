@@ -48,7 +48,7 @@ function Administrator() {
             NumberOfBusinessClassSeats: NumberOfBusinessClassSeatsUpdate,
             Airport: AirportUpdate
         })
-            .then((response) => {
+            .then(() => {
                 window.location.href = '/';
             });
     }

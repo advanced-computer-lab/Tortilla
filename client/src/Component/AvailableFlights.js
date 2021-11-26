@@ -12,6 +12,7 @@ function AvailableFlights() {
     const [SearchBusiness, setSearchBusiness] = useState("");
 
     const [list, setList] = useState([]);
+    const [current, setcurrent] = useState("");
 
     //function search(){
     useEffect(() => {
@@ -25,10 +26,21 @@ function AvailableFlights() {
 
     //}
 
+
+    const handleChange = (event) => {
+        setcurrent({ value: event.target.value });
+    }
+
+    const handleSubmit = (event) => {
+        alert('Your cabin is: ' + current);
+        event.preventDefault();
+
+    }
+
     function BookFlight(id) {
         axios.post('http://localhost:8000/bookFlight', { id: id })
             .then((response) => {
-
+                console.log(response.data)
             });
     }
 
@@ -60,25 +72,28 @@ function AvailableFlights() {
             <br />
             <br />
 
-            <input type='text' placeholder='Search Economy...' onChange={e => {
-                setSearchEconomy(e.target.value);
-            }} />
-            <br />
-            <br />
-            <input type='text' placeholder='Search Business...' onChange={e => {
-                setSearchBusiness(e.target.value);
-            }} />
-            <br />
-            <br />
-            {/* <button onClick={search}> Search </button> */}
+            <div>
+                <form onSubmit={handleSubmit}>
+                    <label>
+                        Choose Your Cabin :
+                        <br />
+                        <select value={current} onChange={handleChange}>
+                            <option value="Default"> Default </option>
+                            <option value="Business"> Business Class</option>
+                            <option value="Economy"> Economy Class</option>
+                        </select>
+                    </label>
+                    <input type="submit" value="Submit" />
+                </form>
+            </div>
             <h1> Available Flights </h1>
             <br />
             <br />
             {list.filter((val) => {
                 if (
-                    (((val.NumberOfEconomySeats - SearchNumberOfPassengers) >= 0)
-                        || ((val.NumberOfBusinessClassSeats - SearchNumberOfPassengers) >= 0))
-                    && val.Airport.toString().includes(SearchAirport)
+
+                    
+                     val.Airport.toString().includes(SearchAirport)
                     && val.ArrivalAirport.toString().includes(SearchArrivalAirport)
                     && val.NumberOfEconomySeats.toString().includes(SearchEconomy)
                     && val.NumberOfBusinessClassSeats.toString().includes(SearchBusiness)
