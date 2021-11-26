@@ -91,11 +91,15 @@ function Administrator() {
             <br />
             <br />
             {list.filter((val) => {
+                  const FlightNumber = val.FlightNumber + "";
+                  const Airport = val.Airport + "";
+                  const NumberOfEconomySeats = val.NumberOfEconomySeats + "";
+                  const NumberOfBusinessClassSeats = val.NumberOfBusinessClassSeats + "";
                 if (
-                    val.FlightNumber.toString().includes(SearchFlight)
-                    && val.Airport.toString().includes(SearchAirport)
-                    && val.NumberOfEconomySeats.toString().includes(SearchEconomy)
-                    && val.NumberOfBusinessClassSeats.toString().includes(SearchBusiness)
+                    FlightNumber.includes(SearchFlight)
+                    && Airport.includes(SearchAirport)
+                    && NumberOfEconomySeats.includes(SearchEconomy)
+                    && NumberOfBusinessClassSeats.includes(SearchBusiness)
                 ) { return val }
             }).map(flight => {
                 return (
