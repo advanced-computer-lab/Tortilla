@@ -7,7 +7,6 @@ import User from './Component/User/User';
 import EditUserInfo from './Component/User/EditUserInfo';
 import AvailableFlights from './Component/AvailableFlights';
 import UserSearch from './Component/User/UserSearch';
-import K from './Component/K';
 
 function App() {
 
@@ -17,8 +16,6 @@ function App() {
         <Routes>
           <Route path="/" element={<Administrator />} />
           
-          <Route path="/f" element={<K />} />
-
           <Route path="/create" element={<CreateFlight />} />
           <Route path="/search" element={<Search />} />
           <Route path="/userSearch" element={<UserSearch />} />
