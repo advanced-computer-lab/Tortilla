@@ -6,11 +6,11 @@ const flightSchema = new Schema({
         type: Number,
         required: true,
     },
-    ArrivalDateAndTime: {
+    DepartureDateAndTime: {
         type: String,
         required: true
     },
-    DepartureDateAndTime: {
+    ArrivalDateAndTime: {
         type: String,
         required: true
     },
@@ -22,8 +22,20 @@ const flightSchema = new Schema({
         type: Number,
         required: true
     },
+    ArrivalAirport: {
+        type: String,
+        required: true
+    },
     Airport: {
         type: String,
+        required: true
+    },
+    Price: {
+        type: Number,
+        required: true
+    },
+    BaggageAllowance: {
+        type: Number,
         required: true
     },
     isAvailable: {

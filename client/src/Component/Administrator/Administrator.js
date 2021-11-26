@@ -11,7 +11,6 @@ function Administrator() {
     const [NumberOfBusinessClassSeatsUpdate, setNumberOfBusinessClassSeatsUpdate] = useState("");
     const [AirportUpdate, setAirportUpdate] = useState("");
 
-
     const [SearchFlight, setSearchFlight] = useState("");
     const [SearchAirport, setSearchAirport] = useState("");
     const [SearchEconomy, setSearchEconomy] = useState("");
@@ -31,7 +30,7 @@ function Administrator() {
 
     function deleteFlight(id) {
         axios.post('http://localhost:8000/deleteFlight', { id: id, Admin: 'Administrator' })
-            .then((response) => {
+            .then(() => {
                 setList(list.filter((val) => {
                     return val._id !== id;
                 }))
@@ -103,11 +102,14 @@ function Administrator() {
                     <h3 key={flight._id}>
                         <div className='list'>
                             <li>FlightNumber :{flight.FlightNumber}</li>
-                            <li>ArrivalDateAndTime :{flight.ArrivalDateAndTime}</li>
                             <li>DepartureDateAndTime :{flight.DepartureDateAndTime}</li>
+                            <li>ArrivalDateAndTime :{flight.ArrivalDateAndTime}</li>
                             <li>NumberOfEconomySeats :{flight.NumberOfEconomySeats}</li>
                             <li>NumberOfBusinessClassSeats :{flight.NumberOfBusinessClassSeats}</li>
                             <li>Airport :{flight.Airport}</li>
+                            <li>ArrivalAirport :{flight.ArrivalAirport}</li>
+                            <li>TripDuration :{flight.TripDuration}</li>
+                            <li>Price :{flight.Price}</li>
                             <button onClick={() => {
                                 var result = window.confirm("Are You Sure Want to delete?");
                                 if (result) {
