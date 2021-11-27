@@ -107,10 +107,10 @@ function AvailableFlights() {
                 if (
                     (((val.NumberOfEconomySeats - SearchNumberOfPassengers) >= 0 && (current === "Economy"))
                         || ((val.NumberOfBusinessClassSeats - SearchNumberOfPassengers) >= 0 && (current === "Business")))
-                    && (val.FlightType === FlightType)
+                    || (val.FlightType === FlightType)
                     && Airport.includes(SearchAirport)
                     && ArrivalAirport.includes(SearchArrivalAirport)
-                ) { return val }
+                ) {console.log(val); return val }
             }).map(flight => {
                 const ArrivalDateAndTime = new Date(flight.ArrivalDateAndTime);
                 const DepartureDateAndTime = new Date(flight.DepartureDateAndTime);
