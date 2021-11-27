@@ -27,8 +27,8 @@ const userSchema = new Schema({
         required: true
     },
     ReservedFlights: {
-        type: ArrayBuffer,
-        required: true
+        type: Array,
+        required: false
     },
 }, { timestamps: true });
 

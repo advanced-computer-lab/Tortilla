@@ -2,6 +2,8 @@ import axios from 'axios';
 import React, { useState } from 'react'
 
 function CreateFlight() {
+    const [FlightType, setFlightType] = useState("");
+
     const [ArrivalDateAndTime, setArrivalDateAndTime] = useState();
     const [DepartureDateAndTime, setDepartureDateAndTime] = useState();
     const [FlightNumber, setFlightNumber] = useState("");
@@ -10,21 +12,21 @@ function CreateFlight() {
     const [Airport, setAirport] = useState("");
     const [Price, setPrice] = useState("");
     const [ArrivalAirport, setArrivalAirport] = useState("");
-    const [TripDuration, setTripDuration] = useState("");
     const [BaggageAllowance, setBaggageAllowance] = useState("");
+
 
     function Create() {
         axios.post('http://localhost:8000/createFlight', {
+            FlightType: FlightType,
             ArrivalDateAndTime: ArrivalDateAndTime,
             DepartureDateAndTime: DepartureDateAndTime,
             FlightNumber: FlightNumber,
             NumberOfEconomySeats: NumberOfEconomySeats,
             NumberOfBusinessClassSeats: NumberOfBusinessClassSeats,
             Airport: Airport,
-            ArrivalAirport : ArrivalAirport,
-            Price : Price,
-            TripDuration : TripDuration,
-            BaggageAllowance : BaggageAllowance
+            ArrivalAirport: ArrivalAirport,
+            Price: Price,
+            BaggageAllowance: BaggageAllowance
 
         }).then(() => {
             window.location.href = '/';
@@ -33,9 +35,25 @@ function CreateFlight() {
         })
     }
 
+    const handleChange = (event) => {
+        setFlightType(event.target.value);
+    }
+
 
     return (
         <div className='CreateFlight'>
+            <form>
+                <label>
+                    Choose Flight Type :
+                    <br />
+                    <select onChange={handleChange}>
+                        <option value="Default"> Default </option>
+                        <option value="Departure"> Departure</option>
+                        <option value="Return"> Return </option>
+                    </select>
+                </label>
+            </form>
+            <br />
             <label>DepartureDateAndTime</label>
             <br />
             <input type='datetime-local' onChange={e => {
@@ -77,11 +95,6 @@ function CreateFlight() {
             <br />
             <input type='text' placeholder='Price...' onChange={e => {
                 setPrice(e.target.value);
-            }} />
-            <br />
-            <br />
-            <input type='text' placeholder='Trip Duration...' onChange={e => {
-                setTripDuration(e.target.value);
             }} />
             <br />
             <br />

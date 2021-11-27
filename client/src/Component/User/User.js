@@ -5,10 +5,12 @@ function User() {
 
     return (
         <div className="user">
-            <div className = "editLink">
+            <div className="editLink">
                 <Link to="/editUserInfo"> Edit Your Information </Link>
-
+                <br />
+                <br />
                 <Link to="/availableFlights"> Book Now </Link>
+
             </div>
         </div>
     )

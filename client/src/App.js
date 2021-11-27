@@ -15,7 +15,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Administrator />} />
-          
+
           <Route path="/create" element={<CreateFlight />} />
           <Route path="/search" element={<Search />} />
           <Route path="/userSearch" element={<UserSearch />} />

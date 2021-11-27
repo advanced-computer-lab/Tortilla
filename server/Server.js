@@ -15,22 +15,47 @@ mongoose.connect(process.env.MongoURI, { useNewUrlParser: true, useUnifiedTopolo
   .then(result => console.log("MongoDB is now connected"))
   .catch(err => console.log(err));
 
-app.get('/bookFlight', async (req, res) => {
+app.post('/bookFlight', async (req, res) => {
 
   const bookedFlightId = req.body.id;
+  const userEmail = req.body.email;
 
-  const bookedFlight = await flight.findOne({ _id: ObjectId(bookedFlightId) })
+  const NumberOfReservedBusiness = req.body.NumberOfReservedBusiness;
+  const NumberOfReservedEconomy = req.body.NumberOfReservedEconomy;
 
-  
+  const bookedFlight = await flight.findOne({ _id: ObjectId(bookedFlightId) });
 
-});  
+  const User = await user.findOne({ where: userEmail });
+
+  const remainingOfBusinessSeats = bookedFlight.NumberOfBusinessClassSeats - NumberOfReservedBusiness;
+  const remainingOfEconomySeats = bookedFlight.NumberOfEconomySeats - NumberOfReservedEconomy;
+
+  console.log(remainingOfBusinessSeats)
+  console.log(remainingOfEconomySeats)
+  console.log(User.ReservedFlights);
+
+  const data = {
+    NumberOfBusinessClassSeats: remainingOfBusinessSeats,
+    NumberOfEconomySeats: remainingOfEconomySeats
+  }
+
+  if (bookedFlight) {
+    await flight.updateOne({ _id: ObjectId(bookedFlightId) }, data);
+    const reservedFlight = await flight.findOne({ _id: ObjectId(bookedFlightId) });
+    User.ReservedFlights.push(reservedFlight);
+    await User.save();
+    res.send({ message: "true" });
+  } else {
+    res.send({ message: "false" });
+  }
+
+});
 
 app.put('/editUserInfo', async (req, res) => {
 
   const data = {
     OldFirstName: req.body.OldFirstName,
     OldLasttName: req.body.OldLastName,
-    OldEmail: req.body.OldEmail,
     OldPassportNumber: req.body.OldPassportNumber,
 
     NewFirstName: req.body.NewFirstName,
@@ -39,22 +64,24 @@ app.put('/editUserInfo', async (req, res) => {
     NewPassportNumber: req.body.NewPassportNumber
   }
 
+  const currentEmail = req.body.CurrentEmail;
+
   console.log(data);
 
-  if (data.OldFirstName) {
-    await user.updateOne({ FirstName: data.OldFirstName }, { FirstName: data.NewFirstName });
+  if (data.NewFirstName) {
+    await user.updateOne({ Email: currentEmail }, { FirstName: data.NewFirstName });
   }
 
-  if (data.OldLasttName) {
-    await user.updateOne({ OldLasttName: data.OldLasttName }, { LastName: data.NewLastName });
+  if (data.NewLastName) {
+    await user.updateOne({ Email: currentEmail }, { LastName: data.NewLastName });
   }
 
-  if (data.OldEmail) {
-    await user.updateOne({ OldEmail: data.OldEmail }, { Email: data.NewEmail });
+  if (data.NewEmail) {
+    await user.updateOne({ Email: currentEmail }, { Email: data.NewEmail });
   }
 
-  if (data.OldPassportNumber) {
-    await user.updateOne({ OldPassportNumber: data.OldPassportNumber }, { PassportNumber: data.NewPassportNumber });
+  if (data.NewPassportNumber) {
+    await user.updateOne({ Email: currentEmail }, { PassportNumber: data.NewPassportNumber });
   }
 });
 
@@ -126,6 +153,7 @@ app.post('/createFlight', async (req, res) => {
   const Airport = req.body.Airport;
 
   const data = {
+    FlightType: req.body.FlightType,
     ArrivalDateAndTime: req.body.ArrivalDateAndTime,
     DepartureDateAndTime: req.body.DepartureDateAndTime,
     FlightNumber: req.body.FlightNumber,
@@ -173,20 +201,31 @@ app.get('/getAllAvailableUsers', async (req, res) => {
   res.status(200).send(users);
 });
 
-app.get('/addUser', async (req, res) => {
-  const Userdata = {
-    FirstName: "Mohamed",
-    LastName: "Safar",
-    Password: "1",
-    Email: "m@yahoo.com",
-    type: "male",
-    PassportNumber: "123456789",
-  }
+// app.get('/addUser', async (req, res) => {
 
-  await user.create(Userdata);
+//   const Admin = {
+//     FirstName: "Mohamed",
+//     LastName: "Safar",
+//     Password: "1",
+//     Email: "m@yahoo.com",
+//     type: "Adminstrator",
+//     PassportNumber: "123456",
+//   }
 
-  res.status(200).send(Userdata);
-});
+//   const Userdata = {
+//     FirstName: "Ahmed",
+//     LastName: "Sameer",
+//     Password: "2",
+//     Email: "a@yahoo.com",
+//     type: "male",
+//     ReservedFlights: [],
+//     PassportNumber: "012345",
+//   }
+
+//   await user.create(Admin);
+//   await user.create(Userdata);
+
+// });
 
 app.listen(8000, () => {
   console.log(`Listening to requests on http://localhost:${8000}`);
