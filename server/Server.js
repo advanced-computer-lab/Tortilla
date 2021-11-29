@@ -205,44 +205,46 @@ app.get('/getAllAvailableUsers', async (req, res) => {
   res.status(200).send(users);
 });
 
-// app.get('/addUser', async (req, res) => {
+app.get('/addUser', async (req, res) => {
 
-//   const Admin = {
-//     FirstName: "Mohamed",
-//     LastName: "Safar",
-//     Password: "1",
-//     Email: "m@yahoo.com",
-//     type: "Adminstrator",
-//     PassportNumber: "123456",
-//   }
+  const Admin = {
+    FirstName: "Mohamed",
+    LastName: "Safar",
+    Password: "1",
+    Email: "m@yahoo.com",
+    type: "Adminstrator",
+    PassportNumber: "123456",
+  }
 
-//   const Userdata = {
-//     FirstName: "Ahmed",
-//     LastName: "Sameer",
-//     Password: "2",
-//     Email: "a@yahoo.com",
-//     type: "male",
-//     ReservedFlights: [],
-//     PassportNumber: "012345",
-//   }
+  const Userdata = {
+    FirstName: "Ahmed",
+    LastName: "Sameer",
+    Password: "2",
+    Email: "a@yahoo.com",
+    type: "male",
+    ReservedFlights: [],
+    Seats:[],
+    PassportNumber: "012345",
+  }
 
-//   const Userdata1 = {
-//     FirstName: "khaled",
-//     LastName: "ashraf",
-//     Password: "6",
-//     Email: "k@yahoo.com",
-//     type: "female",
-//     ReservedFlights: [],
-//     PassportNumber: "5555",
-//   }
+  const Userdata1 = {
+    FirstName: "khaled",
+    LastName: "ashraf",
+    Password: "6",
+    Email: "k@yahoo.com",
+    type: "female",
+    ReservedFlights: [],
+    Seats:[],
+    PassportNumber: "5555",
+  }
 
 
 
-//   // await user.create(Admin);
-//   // await user.create(Userdata);
-//   await user.create(Userdata1);
+  await user.create(Admin);
+  await user.create(Userdata);
+  await user.create(Userdata1);
 
-// });
+});
 
 app.post('/Summary', async (req, res) => {
   const email = req.body.email;
@@ -262,19 +264,36 @@ app.post('/GetIDandEmail', async (req, res) => {
 
 app.get('/PostID&Email', async (req, res) => {
   const data={F_ID,UserEmail}
-  //console.log(data);
+ // console.log(data);
 
  res.status(200).send(data);
 });
 
 app.post('/GetFlight', async (req, res) => {
  const FlightID = req.body.fid;
-// console.log(FlightID);
-// const UserEmail = req.body.UserEmail;
+ //console.log(FlightID);
+ const UserEmail = req.body.UserEmail;
   const Flight = await flight.findOne({ _id: ObjectId(FlightID) });
-// const NumberOfEconomySeats=Flight.NumberOfEconomySeats;
-// console.log(Flight);
-// res.status(200).send(NumberOfEconomySeats);
+ const NumberOfEconomySeats=Flight.NumberOfEconomySeats;
+ const NumberOfBusinessClassSeats=Flight.NumberOfBusinessClassSeats;
+ //console.log(Flight);
+ const data ={
+  NumberOfEconomySeats,
+  NumberOfBusinessClassSeats
+ }
+ res.status(200).send(data);
+});
+
+app.post('/SetSeats', async (req, res) => {
+  const Seat= req.body.number;
+  const email= req.body.email;
+  const classtype= req.body.classtype;
+  const TheUser = await user.findOne({ Email:email});
+  const data ={classtype,Seat}
+  TheUser.Seats.push(data);
+    await TheUser.save();
+  
+  res.status(200).send({ message: 'true' });
 });
 
 

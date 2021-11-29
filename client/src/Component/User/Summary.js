@@ -52,6 +52,7 @@ function Summary() {
                         return (
                             <div className='list'>
                                 <div key={flight._id}>
+                                    <li>Flight Type :{flight.FlightType}</li>
                                     <li>FlightNumber :{flight.FlightNumber}</li>
                                     <li>ArrivalDateAndTime :{flight.ArrivalDateAndTime}</li>
                                     <li>DepartureDateAndTime :{flight.DepartureDateAndTime}</li>
