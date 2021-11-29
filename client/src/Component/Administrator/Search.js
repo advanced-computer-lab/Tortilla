@@ -9,7 +9,6 @@ function Search() {
     const [NumberOfBusinessClassSeatsUpdate, setNumberOfBusinessClassSeatsUpdate] = useState("");
     const [AirportUpdate, setAirportUpdate] = useState("");
 
-
     const [ArrivalDateAndTime, setArrivalDateAndTime] = useState();
     const [DepartureDateAndTime, setDepartureDateAndTime] = useState();
     const [SearchList, setSearchList] = useState([]);
@@ -73,8 +72,6 @@ function Search() {
             <div>
                 {
                     SearchList.filter((val) => {
-                        //console.log(val.ArrivalDateAndTime)
-                        console.log(ArrivalDateAndTime)
                         return val.ArrivalDateAndTime <= ArrivalDateAndTime || val.DepartureDateAndTime >= DepartureDateAndTime;
                     }).map((flight) => {
                         return (
@@ -86,6 +83,9 @@ function Search() {
                                     <li>NumberOfEconomySeats :{flight.NumberOfEconomySeats}</li>
                                     <li>NumberOfBusinessClassSeats :{flight.NumberOfBusinessClassSeats}</li>
                                     <li>Airport :{flight.Airport}</li>
+                                    <li>ArrivalAirport :{flight.ArrivalAirport}</li>
+                                    <li>TripDuration :{flight.TripDuration}</li>
+                                    <li>Price :{flight.Price}</li>
                                 </div>
                                 <button onClick={() => {
                                     var result = window.confirm("Are You Sure Want to delete?");
