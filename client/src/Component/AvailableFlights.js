@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 function AvailableFlights() {
     const [FlightType, setFlightType] = useState("");
 
-
     const [SearchNumberOfPassengers, setSearchNumberOfPassengers] = useState("");
     const [SearchAirport, setSearchAirport] = useState("");
     const [SearchArrivalAirport, setSearchArrivalAirport] = useState("");
@@ -16,7 +15,6 @@ function AvailableFlights() {
     const [NumberOfReservedBusiness, setNumberOfReservedBusiness] = useState("");
     const [NumberOfReservedEconomy, setNumberOfReservedEconomy] = useState("");
     const [email, setEmail] = useState("");
-
 
     useEffect(() => {
         axios.get('http://localhost:8000/getAllAvailableFlights')
@@ -42,6 +40,7 @@ function AvailableFlights() {
                 console.log(response.data)
             });
     }
+
 
     return (
 
@@ -110,7 +109,7 @@ function AvailableFlights() {
                     || (val.FlightType === FlightType)
                     && Airport.includes(SearchAirport)
                     && ArrivalAirport.includes(SearchArrivalAirport)
-                ) {console.log(val); return val }
+                ) { console.log(val); return val }
             }).map(flight => {
                 const ArrivalDateAndTime = new Date(flight.ArrivalDateAndTime);
                 const DepartureDateAndTime = new Date(flight.DepartureDateAndTime);
@@ -143,6 +142,10 @@ function AvailableFlights() {
                     </h3>
                 )
             })}
+
+            <div>
+
+            </div>
         </div >
     )
 }

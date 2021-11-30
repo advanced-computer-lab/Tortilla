@@ -8,6 +8,9 @@ const flight = require('./Models/Flight');
 
 const ObjectId = require('mongodb').ObjectId;
 
+var F_ID = 0;
+var UserEmail = "";
+
 app.use(express.json());
 app.use(cors());
 
@@ -25,14 +28,14 @@ app.post('/bookFlight', async (req, res) => {
 
   const bookedFlight = await flight.findOne({ _id: ObjectId(bookedFlightId) });
 
-  const User = await user.findOne({ where: userEmail });
+  const User = await user.findOne({ Email: userEmail });
 
   const remainingOfBusinessSeats = bookedFlight.NumberOfBusinessClassSeats - NumberOfReservedBusiness;
   const remainingOfEconomySeats = bookedFlight.NumberOfEconomySeats - NumberOfReservedEconomy;
 
   console.log(remainingOfBusinessSeats)
   console.log(remainingOfEconomySeats)
-  console.log(User.ReservedFlights);
+  console.log(User);
 
   const data = {
     NumberOfBusinessClassSeats: remainingOfBusinessSeats,
@@ -201,32 +204,120 @@ app.get('/getAllAvailableUsers', async (req, res) => {
   res.status(200).send(users);
 });
 
+app.get('/getReservedFlights:email', async (req, res) => {
+  const Email = req.params.email;
+  const User = await user.findOne({ Email: Email });
+  res.status(200).send(User.ReservedFlights);
+});
+
+
+app.post('/cancelFlight', async (req, res) => {
+  const Email = req.body.email;
+  const cancelFlightId = req.body.id;
+
+  const User = await user.findOne({ Email: Email });
+  const records = User.ReservedFlights;
+
+  console.log(records);
+
+  //const cancelFlight = await records.findOne({ _id: ObjectId(cancelFlightId) });
+
+  //console.log(cancelFlight);
+
+});
+
+
+app.post('/Summary', async (req, res) => {
+  const email = req.body.email;
+  // console.log(email);
+  const TheUser = await user.findOne({ Email: email });
+  // console.log(TheUser.Email);
+  const flights = TheUser.ReservedFlights;
+
+  res.status(200).send(flights);
+});
+
+app.post('/GetIDandEmail', async (req, res) => {
+  F_ID = req.body.FlightID;
+  UserEmail = req.body.UserEmail;
+  res.status(200).send({ message: 'true' });
+});
+
+app.get('/PostID&Email', async (req, res) => {
+  const data = { F_ID, UserEmail }
+  // console.log(data);
+
+  res.status(200).send(data);
+});
+
+app.post('/GetFlight', async (req, res) => {
+  const FlightID = req.body.fid;
+  //console.log(FlightID);
+  const UserEmail = req.body.UserEmail;
+  const Flight = await flight.findOne({ _id: ObjectId(FlightID) });
+  const NumberOfEconomySeats = Flight.NumberOfEconomySeats;
+  const NumberOfBusinessClassSeats = Flight.NumberOfBusinessClassSeats;
+  //console.log(Flight);
+  const data = {
+    NumberOfEconomySeats,
+    NumberOfBusinessClassSeats
+  }
+  res.status(200).send(data);
+});
+
+app.post('/SetSeats', async (req, res) => {
+  const Seat = req.body.number;
+  const email = req.body.email;
+  const classtype = req.body.classtype;
+  const TheUser = await user.findOne({ Email: email });
+  const data = { classtype, Seat }
+  TheUser.Seats.push(data);
+  await TheUser.save();
+
+  res.status(200).send({ message: 'true' });
+});
+
+
+
+
+
+app.listen(8000, () => {
+  console.log(`Listening to requests on http://localhost:${8000}`);
+});
+
+
+
+
+
+
+
+
+
+
+
+
 // app.get('/addUser', async (req, res) => {
 
 //   const Admin = {
-//     FirstName: "Mohamed",
+//     FirstName: "Mahmoud",
 //     LastName: "Safar",
 //     Password: "1",
 //     Email: "m@yahoo.com",
-//     type: "Adminstrator",
-//     PassportNumber: "123456",
+//     type: "user",
+//     PassportNumber: "1234567",
 //   }
 
 //   const Userdata = {
-//     FirstName: "Ahmed",
-//     LastName: "Sameer",
+//     FirstName: "A",
+//     LastName: "S",
 //     Password: "2",
 //     Email: "a@yahoo.com",
-//     type: "male",
+//     type: "user",
 //     ReservedFlights: [],
-//     PassportNumber: "012345",
+//     PassportNumber: "0123456",
 //   }
 
 //   await user.create(Admin);
 //   await user.create(Userdata);
 
 // });
-
-app.listen(8000, () => {
-  console.log(`Listening to requests on http://localhost:${8000}`);
-});

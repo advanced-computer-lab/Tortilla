@@ -10,7 +10,9 @@ function User() {
                 <br />
                 <br />
                 <Link to="/availableFlights"> Book Now </Link>
-
+                <br />
+                <br />
+                <Link to="/reservedFlights">Go to My Reserved Flights </Link>
             </div>
         </div>
     )

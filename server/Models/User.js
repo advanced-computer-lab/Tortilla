@@ -30,6 +30,10 @@ const userSchema = new Schema({
         type: Array,
         required: false
     },
+    Seats: {
+        type: Array,
+        required: false
+    }
 }, { timestamps: true });
 
 const User = mongoose.model('User', userSchema);

@@ -90,11 +90,14 @@ function Administrator() {
             <h1> Available Flights </h1>
             <br />
             <br />
+            <table>
+
+            <tbody>
             {list.filter((val) => {
-                  const FlightNumber = val.FlightNumber + "";
-                  const Airport = val.Airport + "";
-                  const NumberOfEconomySeats = val.NumberOfEconomySeats + "";
-                  const NumberOfBusinessClassSeats = val.NumberOfBusinessClassSeats + "";
+                const FlightNumber = val.FlightNumber + "";
+                const Airport = val.Airport + "";
+                const NumberOfEconomySeats = val.NumberOfEconomySeats + "";
+                const NumberOfBusinessClassSeats = val.NumberOfBusinessClassSeats + "";
                 if (
                     FlightNumber.includes(SearchFlight)
                     && Airport.includes(SearchAirport)
@@ -104,23 +107,24 @@ function Administrator() {
             }).map(flight => {
                 return (
                     <h3 key={flight._id}>
-                        <div className='list'>
-                            <li>FlightNumber :{flight.FlightNumber}</li>
-                            <li>DepartureDateAndTime :{flight.DepartureDateAndTime}</li>
-                            <li>ArrivalDateAndTime :{flight.ArrivalDateAndTime}</li>
-                            <li>NumberOfEconomySeats :{flight.NumberOfEconomySeats}</li>
-                            <li>NumberOfBusinessClassSeats :{flight.NumberOfBusinessClassSeats}</li>
-                            <li>Airport :{flight.Airport}</li>
-                            <li>ArrivalAirport :{flight.ArrivalAirport}</li>
-                            <li>TripDuration :{flight.TripDuration}</li>
-                            <li>Price :{flight.Price}</li>
-                            <button onClick={() => {
+                        <tr id='list'>
+                            <td>Flight Type {flight.FlightType}</td>
+                            <td>Flight Number {flight.FlightNumber}</td>
+                            <td>Departure Date <br/> {flight.DepartureDateAndTime}</td>
+                            <td>Arrival Date <br/> {flight.ArrivalDateAndTime}</td>
+                            <td>Economy Class Seats {flight.NumberOfEconomySeats}</td>
+                            <td>Business Class Seats {flight.NumberOfBusinessClassSeats}</td>
+                            <td>Departure Airport {flight.Airport}</td>
+                            <td>Arrival Airport {flight.ArrivalAirport}</td>
+                            <td>Trip Duration {flight.TripDuration}</td>
+                            <td>Price {flight.Price}</td>
+                            <button className="button" onClick={() => {
                                 var result = window.confirm("Are You Sure Want to delete?");
                                 if (result) {
                                     deleteFlight(flight._id);
                                 }
                             }}> Delete flight </button>
-                        </div>
+                        </tr>
 
                         <br />
                         <br />
@@ -157,7 +161,7 @@ function Administrator() {
                             <input type='text' placeholder='Airport...' onChange={e => {
                                 setAirportUpdate(e.target.value);
                             }} />
-                            <button onClick={() => {
+                            <button className="button" onClick={() => {
                                 updateFlight(flight._id);
                             }}> Update flight </button>
                         </div>
@@ -165,6 +169,9 @@ function Administrator() {
 
                 )
             })}
+            </tbody>
+            </table>
+
         </div >
     )
 }
