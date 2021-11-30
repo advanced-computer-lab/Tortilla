@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import './update.css';
+//import './update.css';
 
 function Administrator() {
     const [FlightNumberUpdate, setFlightNumberUpdate] = useState();
