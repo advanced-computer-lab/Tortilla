@@ -91,7 +91,7 @@ function Summary() {
                                                 <td>Arrival Airport <br /> {flight.ArrivalAirport}</td>
                                                 <td>Trip Duration <br /> {flight.TripDuration}</td>
                                                 <td>Price <br /> {flight.Price}</td>
-                                                <td>Price <br /> {totalPrice}</td>
+                                                <td>Total Ticket Price <br /> {totalPrice}</td>
                                                 <td>Confirmation Number <br /> {flight.Price}</td>
 
                                             </tr>

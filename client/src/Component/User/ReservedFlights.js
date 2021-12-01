@@ -16,13 +16,13 @@ function ReservedFlights() {
             })
     }
 
-    function cancelReservation(id){
+    function cancelReservation(id) {
         axios.post('http://localhost:8000/cancelReservedFlight', { id: id, email: email })
-        .then(() => {
-            setReservedFlights(reservedFlights.filter((val) => {
-                return val._id !== id;
-            }))
-        });
+            .then(() => {
+                setReservedFlights(reservedFlights.filter((val) => {
+                    return val._id !== id;
+                }))
+            });
     }
 
     return (
@@ -30,34 +30,44 @@ function ReservedFlights() {
             <input type="email" placeholder="Enter your email..." onChange={(e) => setEmail(e.target.value)} />
             <button onClick={getReservedFlights} > Show </button>
 
-            {reservedFlights.map(flight => {
-                const ArrivalDateAndTime = new Date(flight.ArrivalDateAndTime);
-                const DepartureDateAndTime = new Date(flight.DepartureDateAndTime);
-                const tripDuration = (ArrivalDateAndTime - DepartureDateAndTime) / (1000 * 60 * 60);
-                return (
-                    <h3 key={flight._id}>
-                        <table className="listTable">
-                            <li>Flight Type : <span> {flight.FlightType} </span> </li>
-                            <li>FlightNumber : <span> {flight.FlightNumber} </span> </li>
-                            <li>DepartureDateAndTime :<span> {flight.DepartureDateAndTime}</span></li>
-                            <li>ArrivalDateAndTime :<span> {flight.ArrivalDateAndTime}</span></li>
-                            <li>NumberOfEconomySeats :<span> {flight.NumberOfEconomySeats}</span> </li>
-                            <li>NumberOfBusinessClassSeats :<span> {flight.NumberOfBusinessClassSeats}</span></li>
-                            <li>Airport :<span> {flight.Airport}</span></li>
-                            <li>ArrivalAirport :<span> {flight.ArrivalAirport}</span></li>
-                            <li>TripDuration In Hours:<span> {Math.floor(tripDuration)}</span></li>
-                            <li>Price :<span> {flight.Price}</span> </li>
-                            <li>BaggageAllowance In Kg :<span> {flight.BaggageAllowance}</span></li>
-                            <button onClick={() => {
-                                var result = window.confirm("Are You Sure Want to cancel?");
-                                if (result) {
-                                    cancelReservation(flight._id);
-                                }
-                            }}> Cancel Reservation </button>
-                        </table>
-                    </h3>
-                )
-            })}
+            <table>
+
+                <tbody>
+
+                    {reservedFlights.map(flight => {
+                        const ArrivalDateAndTime = new Date(flight.ArrivalDateAndTime);
+                        const DepartureDateAndTime = new Date(flight.DepartureDateAndTime);
+                        const tripDuration = (ArrivalDateAndTime - DepartureDateAndTime) / (1000 * 60 * 60);
+
+                        const price = flight.Price;
+                        const totalPrice = price * 2;
+                        return (
+                            <h3 key={flight._id}>
+                                <tr className="listTable">
+                                    <td>Flight Type  {flight.FlightType}  </td>
+                                    <td>FlightNumber  {flight.FlightNumber}  </td>
+                                    <td>DepartureDateAndTime  {flight.DepartureDateAndTime}</td>
+                                    <td>ArrivalDateAndTime  {flight.ArrivalDateAndTime}</td>
+                                    <td>NumberOfEconomySeats  {flight.NumberOfEconomySeats} </td>
+                                    <td>NumberOfBusinessClassSeats  {flight.NumberOfBusinessClassSeats}</td>
+                                    <td>Airport {flight.Airport}</td>
+                                    <td>ArrivalAirport  {flight.ArrivalAirport}</td>
+                                    <td>TripDuration In Hours {Math.floor(tripDuration)}</td>
+                                    <td>Price {flight.Price}</td>
+                                    <td>Total Ticket Price {totalPrice} </td>
+                                    <td>BaggageAllowance In Kg {flight.BaggageAllowance}</td>
+                                    <button onClick={() => {
+                                        var result = window.confirm("Are You Sure Want to cancel?");
+                                        if (result) {
+                                            cancelReservation(flight._id);
+                                        }
+                                    }}> Cancel Reservation </button>
+                                </tr>
+                            </h3>
+                        )
+                    })}
+                </tbody>
+            </table>
         </div>
     )
 }
