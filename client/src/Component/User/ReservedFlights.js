@@ -17,7 +17,7 @@ function ReservedFlights() {
     }
 
     function cancelReservation(id){
-        axios.post('http://localhost:8000/cancelFlight', { id: id, email: email })
+        axios.post('http://localhost:8000/cancelReservedFlight', { id: id, email: email })
         .then(() => {
             setReservedFlights(reservedFlights.filter((val) => {
                 return val._id !== id;

@@ -37,16 +37,24 @@ function Summary() {
     }
 
     function confirm(id) {
-        console.log(email);
         axios.post('http://localhost:8000/SummaryReserved', {
             FlightID: id,
             UserEmail: email
         }).then(() => {
-            
+
         }).catch((err) => {
             console.log(err);
         })
 
+    }
+
+    function cancelReservation(id){
+        axios.post('http://localhost:8000/cancelChosenFlight', { id: id, email: email })
+        .then(() => {
+            setList(list.filter((val) => {
+                return val._id !== id;
+            }))
+        });
     }
 
 
@@ -67,6 +75,8 @@ function Summary() {
                     <tbody>
                         {
                             list.map((flight) => {
+                                const price = flight.Price;
+                                const totalPrice = price * 2;
                                 return (
                                     <tr className='list'>
                                         <div key={flight._id}>
@@ -81,30 +91,37 @@ function Summary() {
                                                 <td>Arrival Airport <br /> {flight.ArrivalAirport}</td>
                                                 <td>Trip Duration <br /> {flight.TripDuration}</td>
                                                 <td>Price <br /> {flight.Price}</td>
+                                                <td>Price <br /> {totalPrice}</td>
                                                 <td>Confirmation Number <br /> {flight.Price}</td>
 
                                             </tr>
-                                            <br/>
-                                            <td>Seat Number<br/> {seatsList.map((seat) => {
-                                                    return (
-                                                        <tr>
-                                                            <td>{seat.Seat}</td>
-                                                        </tr>
-                                                    )
-                                                })}</td>
+                                            <br />
+                                            <td>Seat Number<br /> {seatsList.map((seat) => {
+                                                return (
+                                                    <tr>
+                                                        <td>{seat.Seat}</td>
+                                                    </tr>
+                                                )
+                                            })}</td>
 
-                                                <td>Class Type {seatsList.map((seat) => {
-                                                    return (
-                                                        <tr>
-                                                            <td>{seat.classtype}</td>
-                                                        </tr>
-                                                    )
-                                                })}</td>
+                                            <td>Class Type {seatsList.map((seat) => {
+                                                return (
+                                                    <tr>
+                                                        <td>{seat.classtype}</td>
+                                                    </tr>
+                                                )
+                                            })}</td>
                                         </div>
                                         <br />
                                         <br />
                                         <button onClick={() => clicked(flight._id)}> Choose my seats  </button>
                                         <button onClick={() => confirm(flight._id)}> Confirm Your Book Now  </button>
+                                        <button onClick={() => {
+                                            var result = window.confirm("Are You Sure Want to cancel?");
+                                            if (result) {
+                                                cancelReservation(flight._id);
+                                            }
+                                        }}> Cancel Book </button>
                                         <br />
                                         <br />
 

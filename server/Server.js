@@ -211,12 +211,30 @@ app.get('/getReservedFlights:email', async (req, res) => {
 });
 
 
-app.post('/cancelFlight', async (req, res) => {
+app.post('/cancelReservedFlight', async (req, res) => {
   const Email = req.body.email;
   const cancelFlightId = req.body.id;
 
   const User = await user.findOne({ Email: Email });
   const records = User.ReservedFlights;
+
+  for(var i = 0; i < records.length; i++){
+    if(ObjectId(cancelFlightId)+"" == records[i]._id+""){
+      records.pop(i);
+      await User.save();
+    }
+  }
+
+  res.status(200).send(records);
+
+});
+
+app.post('/cancelChosenFlight', async (req, res) => {
+  const Email = req.body.email;
+  const cancelFlightId = req.body.id;
+
+  const User = await user.findOne({ Email: Email });
+  const records = User.ChosenFlights;
 
   for(var i = 0; i < records.length; i++){
     if(ObjectId(cancelFlightId)+"" == records[i]._id+""){
