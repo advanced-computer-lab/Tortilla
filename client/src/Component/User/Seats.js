@@ -7,9 +7,10 @@ function Seats() {
     const [BusSeats, setBusSeats] = useState();
     const [email, setemail] = useState();
 
-    var FlightID;
 
     useEffect(() => {
+        var FlightID;
+
         axios.get('http://localhost:8000/PostID&Email')
             .then((response) => {
                 FlightID = (response.data.F_ID);
@@ -43,6 +44,11 @@ function Seats() {
 
     }
 
+    function done(){
+        window.location.href = '/Summary';
+
+    }
+
 
     return (
         <div>
@@ -66,7 +72,10 @@ function Seats() {
             </div>
 
 
-
+                <br/>
+                <br/>
+                <br/>
+                <button onClick={done}> Done </button>
 
         </div>
     )

@@ -6,7 +6,7 @@ table {
   border: 1px solid rgb(134, 134, 134);
 }
 
-.button {
+button {
   background-color: rgb(59, 59, 182);
   border-radius: 15px;
   color: white;
@@ -15,6 +15,6 @@ table {
   font-size: 15px;
 }
 
-.button:hover {
+button:hover {
   background-color: gray;
 }

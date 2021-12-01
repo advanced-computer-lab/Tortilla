@@ -218,28 +218,67 @@ app.post('/cancelFlight', async (req, res) => {
   const User = await user.findOne({ Email: Email });
   const records = User.ReservedFlights;
 
-  console.log(records);
+  for(var i = 0; i < records.length; i++){
+    if(ObjectId(cancelFlightId)+"" == records[i]._id+""){
+      records.pop(i);
+      await User.save();
+    }
+  }
 
-  //const cancelFlight = await records.findOne({ _id: ObjectId(cancelFlightId) });
-
-  //console.log(cancelFlight);
+  res.status(200).send(records);
 
 });
 
 
-app.post('/Summary', async (req, res) => {
+app.post('/SummaryChosen', async (req, res) => {
   const email = req.body.email;
   // console.log(email);
   const TheUser = await user.findOne({ Email: email });
   // console.log(TheUser.Email);
   const flights = TheUser.ReservedFlights;
 
-  res.status(200).send(flights);
+  const data = {
+    Seats : TheUser.Seats,
+    flights : flights
+  }
+
+  res.status(200).send(data);
 });
+
+
+app.post('/SummaryReserved', async (req, res) => {
+  const email = req.body.UserEmail;
+  const FlightID = req.body.FlightID;
+  const TheUser = await user.findOne({ Email: email });
+  const records = TheUser.ReservedFlights;
+
+  const f = await flight.findOne({ _id: ObjectId(FlightID) });
+
+  const recordChosen = TheUser.ChosenFlights;
+
+  for(var i = 0; i < records.length; i++){
+    if(ObjectId(FlightID)+"" == records[i]._id+""){
+      recordChosen.push(f);
+      await TheUser.save();
+    }
+  }
+
+});
+
 
 app.post('/GetIDandEmail', async (req, res) => {
   F_ID = req.body.FlightID;
   UserEmail = req.body.UserEmail;
+  res.status(200).send({ message: 'true' });
+});
+
+app.post('/addReservedFlight', async (req, res) => {
+  F_ID = req.body.FlightID;
+  UserEmail = req.body.UserEmail;
+
+  const Flight = await flight.findOne({ _id: ObjectId(F_ID) });
+  const User = await user.findOne({ Email: UserEmail });
+
   res.status(200).send({ message: 'true' });
 });
 
@@ -314,10 +353,24 @@ app.listen(8000, () => {
 //     Email: "a@yahoo.com",
 //     type: "user",
 //     ReservedFlights: [],
+//     ChosenFlights: [],
+//     PassportNumber: "0123456",
+//   }
+
+  
+//   const Userdata1 = {
+//     FirstName: "E",
+//     LastName: "S",
+//     Password: "3",
+//     Email: "E@yahoo.com",
+//     type: "user",
+//     ReservedFlights: [],
+//     ChosenFlights: [],
 //     PassportNumber: "0123456",
 //   }
 
 //   await user.create(Admin);
 //   await user.create(Userdata);
+//   await user.create(Userdata1);
 
 // });

@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { Modal, Button, Alert } from 'react-bootstrap';
+
 //import './update.css';
 
 function Administrator() {
@@ -15,8 +17,12 @@ function Administrator() {
     const [SearchAirport, setSearchAirport] = useState("");
     const [SearchEconomy, setSearchEconomy] = useState("");
     const [SearchBusiness, setSearchBusiness] = useState("");
+    const [show, setShow] = useState(false);
 
     const [list, setList] = useState([]);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
 
     useEffect(() => {
         axios.get('http://localhost:8000/getAllAvailableFlights')
@@ -52,6 +58,7 @@ function Administrator() {
                 window.location.href = '/';
             });
     }
+
 
     return (
 
@@ -92,84 +99,90 @@ function Administrator() {
             <br />
             <table>
 
-            <tbody>
-            {list.filter((val) => {
-                const FlightNumber = val.FlightNumber + "";
-                const Airport = val.Airport + "";
-                const NumberOfEconomySeats = val.NumberOfEconomySeats + "";
-                const NumberOfBusinessClassSeats = val.NumberOfBusinessClassSeats + "";
-                if (
-                    FlightNumber.includes(SearchFlight)
-                    && Airport.includes(SearchAirport)
-                    && NumberOfEconomySeats.includes(SearchEconomy)
-                    && NumberOfBusinessClassSeats.includes(SearchBusiness)
-                ) { return val }
-            }).map(flight => {
-                return (
-                    <h3 key={flight._id}>
-                        <tr id='list'>
-                            <td>Flight Type {flight.FlightType}</td>
-                            <td>Flight Number {flight.FlightNumber}</td>
-                            <td>Departure Date <br/> {flight.DepartureDateAndTime}</td>
-                            <td>Arrival Date <br/> {flight.ArrivalDateAndTime}</td>
-                            <td>Economy Class Seats {flight.NumberOfEconomySeats}</td>
-                            <td>Business Class Seats {flight.NumberOfBusinessClassSeats}</td>
-                            <td>Departure Airport {flight.Airport}</td>
-                            <td>Arrival Airport {flight.ArrivalAirport}</td>
-                            <td>Trip Duration {flight.TripDuration}</td>
-                            <td>Price {flight.Price}</td>
-                            <button className="button" onClick={() => {
-                                var result = window.confirm("Are You Sure Want to delete?");
-                                if (result) {
-                                    deleteFlight(flight._id);
-                                }
-                            }}> Delete flight </button>
-                        </tr>
+                <tbody>
+                    {list.filter((val) => {
+                        const FlightNumber = val.FlightNumber + "";
+                        const Airport = val.Airport + "";
+                        const NumberOfEconomySeats = val.NumberOfEconomySeats + "";
+                        const NumberOfBusinessClassSeats = val.NumberOfBusinessClassSeats + "";
+                        if (
+                            FlightNumber.includes(SearchFlight)
+                            && Airport.includes(SearchAirport)
+                            && NumberOfEconomySeats.includes(SearchEconomy)
+                            && NumberOfBusinessClassSeats.includes(SearchBusiness)
+                        ) { return val }
+                    }).map(flight => {
+                        return (
+                            <h3 key={flight._id}>
+                                <tr id='list'>
+                                    <td>Flight Type {flight.FlightType}</td>
+                                    <td>Flight Number {flight.FlightNumber}</td>
+                                    <td>Departure Date <br /> {flight.DepartureDateAndTime}</td>
+                                    <td>Arrival Date <br /> {flight.ArrivalDateAndTime}</td>
+                                    <td>Economy Class Seats {flight.NumberOfEconomySeats}</td>
+                                    <td>Business Class Seats {flight.NumberOfBusinessClassSeats}</td>
+                                    <td>Departure Airport {flight.Airport}</td>
+                                    <td>Arrival Airport {flight.ArrivalAirport}</td>
+                                    <td>Trip Duration {flight.TripDuration}</td>
+                                    <td>Price {flight.Price}</td>
+                                    <button className="button" onClick={() => {
+                                        var result = window.confirm("Are You Sure Want to delete?");
+                                        if (result) {
+                                            deleteFlight(flight._id);
+                                        }
+                                    }}> Delete flight </button>
+                                </tr>
 
-                        <br />
-                        <br />
+                                <br />
+                                <br />
 
-                        <div className='update'>
+                                <Modal show={show} onHide={handleClose}>
+                                    <Modal.Body>
+                                        <div className='update'>
 
-                            <label>ArrivalDateAndTime</label>
-                            <input type='datetime-local' onChange={e => {
-                                setArrivalDateAndTimeUpdate(e.target.value);
-                            }} />
-
-
-                            <label>DepartureDateAndTime</label>
-                            <input type='datetime-local' onChange={e => {
-                                setDepartureDateAndTimeUpdate(e.target.value);
-                            }} />
+                                            <label>ArrivalDateAndTime</label>
+                                            <input type='datetime-local' onChange={e => {
+                                                setArrivalDateAndTimeUpdate(e.target.value);
+                                            }} />
 
 
-                            <input type='text' placeholder='New flight number...' onChange={e => {
-                                setFlightNumberUpdate(e.target.value);
-                            }} />
+                                            <label>DepartureDateAndTime</label>
+                                            <input type='datetime-local' onChange={e => {
+                                                setDepartureDateAndTimeUpdate(e.target.value);
+                                            }} />
 
 
-                            <input type='text' placeholder='NumberOfEconomySeats...' onChange={e => {
-                                setNumberOfEconomySeatsUpdate(e.target.value);
-                            }} />
+                                            <input type='text' placeholder='New flight number...' onChange={e => {
+                                                setFlightNumberUpdate(e.target.value);
+                                            }} />
 
 
-                            <input type='text' placeholder='NumberOfBusinessClassSeats...' onChange={e => {
-                                setNumberOfBusinessClassSeatsUpdate(e.target.value);
-                            }} />
+                                            <input type='text' placeholder='NumberOfEconomySeats...' onChange={e => {
+                                                setNumberOfEconomySeatsUpdate(e.target.value);
+                                            }} />
 
 
-                            <input type='text' placeholder='Airport...' onChange={e => {
-                                setAirportUpdate(e.target.value);
-                            }} />
-                            <button className="button" onClick={() => {
-                                updateFlight(flight._id);
-                            }}> Update flight </button>
-                        </div>
-                    </h3>
+                                            <input type='text' placeholder='NumberOfBusinessClassSeats...' onChange={e => {
+                                                setNumberOfBusinessClassSeatsUpdate(e.target.value);
+                                            }} />
 
-                )
-            })}
-            </tbody>
+
+                                            <input type='text' placeholder='Airport...' onChange={e => {
+                                                setAirportUpdate(e.target.value);
+                                            }} />
+                                            <button onClick={() => {
+                                                updateFlight(flight._id);
+                                            }}> Update flight </button>
+
+                                        </div>
+                                    </Modal.Body>
+                                </Modal>
+                                <button onClick={handleShow}> Update </button>
+                            </h3>
+
+                        )
+                    })}
+                </tbody>
             </table>
 
         </div >

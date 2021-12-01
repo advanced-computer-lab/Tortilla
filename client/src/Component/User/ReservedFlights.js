@@ -6,8 +6,6 @@ function ReservedFlights() {
     const [email, setEmail] = useState("");
     const [reservedFlights, setReservedFlights] = useState([]);
 
-    console.log(email);
-
     function getReservedFlights() {
         axios.get(`http://localhost:8000/getReservedFlights${email}`)
             .then((res) => {
@@ -50,7 +48,7 @@ function ReservedFlights() {
                             <li>TripDuration In Hours:<span> {Math.floor(tripDuration)}</span></li>
                             <li>Price :<span> {flight.Price}</span> </li>
                             <li>BaggageAllowance In Kg :<span> {flight.BaggageAllowance}</span></li>
-                            <button className="button" onClick={() => {
+                            <button onClick={() => {
                                 var result = window.confirm("Are You Sure Want to cancel?");
                                 if (result) {
                                     cancelReservation(flight._id);

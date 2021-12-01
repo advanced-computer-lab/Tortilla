@@ -2,68 +2,119 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 
-function Seats() {
-    const [EcoSeats, setEcoSeats] = useState();
-    const [BusSeats, setBusSeats] = useState();
-    const [email, setemail] = useState();
+
+function Summary() {
+
+    const [email, setEmail] = useState("");
+    const [list, setList] = useState([]);
+    const [seatsList, setSeatsList] = useState([]);
 
 
-    useEffect(() => {
-        var FlightID;
-
-        axios.get('http://localhost:8000/PostID&Email')
+    function View() {
+        axios.post('http://localhost:8000/SummaryChosen', {
+            email: email
+        })
             .then((response) => {
-                FlightID = (response.data.F_ID);
-                setemail(response.data.UserEmail);
-
-            }).then((err) => {
-                axios.post('http://localhost:8000/GetFlight', {
-                    fid: FlightID,
-                    Email: email
-                }).then((response) => {
-                    setEcoSeats(response.data.NumberOfEconomySeats);
-                    setBusSeats(response.data.NumberOfBusinessClassSeats);
-
-                }).catch(err => {
-                    console.log(err);
-                })
-            }).catch((err) => {
-
+                setList(response.data.flights);
+                setSeatsList(response.data.Seats)
+                console.log(response.data.Seats)
+            }).catch(err => {
+                console.log(err);
             })
-    }, []);
 
-    function clicked(i, classtype) {
-        axios.post('http://localhost:8000/SetSeats', {
-            number: i,
-            email: email,
-            classtype: classtype
-        }).then((response) => {
-        }).catch(err => {
+    }
+
+    function clicked(id) {
+        axios.post('http://localhost:8000/GetIDandEmail', {
+            FlightID: id,
+            UserEmail: email
+        }).then(() => {
+            window.location.href = '/Seats';
+        }).catch((err) => {
+            console.log(err);
+        })
+
+    }
+
+    function confirm(id) {
+        console.log(email);
+        axios.post('http://localhost:8000/SummaryReserved', {
+            FlightID: id,
+            UserEmail: email
+        }).then(() => {
+            
+        }).catch((err) => {
             console.log(err);
         })
 
     }
 
 
+
     return (
-        <div>
-            <h1> Business Class </h1>
+        <div className="Summary">
+            <input type="email" placeholder="Enter your Email..." onChange={(e) => setEmail(e.target.value)} />
+            <br />
+            <br />
+
+            <button onClick={View}> View </button>
+
+            <h1> My Summary </h1>
 
             <div>
-                {
-                    [...Array(BusSeats)].map((e, i) => <span key={i}>{<button onClick={() => clicked(i + 1, "Business")}> {i + 1} </button>}</span>)
+                <table>
 
-                }
-            </div>
+                    <tbody>
+                        {
+                            list.map((flight) => {
+                                return (
+                                    <tr className='list'>
+                                        <div key={flight._id}>
+                                            <tr id='list'>
+                                                <td>Flight Type <br /> {flight.FlightType}</td>
+                                                <td>Flight Number <br /> {flight.FlightNumber}</td>
+                                                <td>Departure Date <br /> {flight.DepartureDateAndTime}</td>
+                                                <td>Arrival Date <br /> {flight.ArrivalDateAndTime}</td>
+                                                <td>Economy Class Seats <br /> {flight.NumberOfEconomySeats}</td>
+                                                <td>Business Class Seats <br /> {flight.NumberOfBusinessClassSeats}</td>
+                                                <td>Departure Airport <br /> {flight.Airport}</td>
+                                                <td>Arrival Airport <br /> {flight.ArrivalAirport}</td>
+                                                <td>Trip Duration <br /> {flight.TripDuration}</td>
+                                                <td>Price <br /> {flight.Price}</td>
+                                                <td>Confirmation Number <br /> {flight.Price}</td>
 
+                                            </tr>
+                                            <br/>
+                                            <td>Seat Number<br/> {seatsList.map((seat) => {
+                                                    return (
+                                                        <tr>
+                                                            <td>{seat.Seat}</td>
+                                                        </tr>
+                                                    )
+                                                })}</td>
 
-            <h1> Economy Class </h1>
+                                                <td>Class Type {seatsList.map((seat) => {
+                                                    return (
+                                                        <tr>
+                                                            <td>{seat.classtype}</td>
+                                                        </tr>
+                                                    )
+                                                })}</td>
+                                        </div>
+                                        <br />
+                                        <br />
+                                        <button onClick={() => clicked(flight._id)}> Choose my seats  </button>
+                                        <button onClick={() => confirm(flight._id)}> Confirm Your Book Now  </button>
+                                        <br />
+                                        <br />
 
-            <div>
-                {
-                    [...Array(EcoSeats)].map((e, i) => <span key={i}>{<button onClick={() => clicked(i + 1, "Economy")} > {i + 1} </button>}</span>)
+                                    </tr>
+                                )
+                            })
+                        }
+                    </tbody>
+                </table>
 
-                }
             </div>
 
 
@@ -71,6 +122,7 @@ function Seats() {
 
         </div>
     )
-}
 
-export default Seats;
+
+}
+export default Summary;

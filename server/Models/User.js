@@ -30,6 +30,10 @@ const userSchema = new Schema({
         type: Array,
         required: false
     },
+    ChosenFlights: {
+        type: Array,
+        required: false
+    },
     Seats: {
         type: Array,
         required: false

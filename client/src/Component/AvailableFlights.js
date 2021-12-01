@@ -137,7 +137,10 @@ function AvailableFlights() {
                             <input type='number' placeholder='Business...' onChange={e => {
                                 setNumberOfReservedBusiness(e.target.value);
                             }} />
-                            <button onClick={() => { BookFlight(flight._id) }}> Book </button>
+                            <button className="button" onClick={() => {
+                                BookFlight(flight._id)
+                                window.confirm("Your Flight is Added")
+                            }}> Add To Choose Your Seat</button>
                         </div>
                     </h3>
                 )
