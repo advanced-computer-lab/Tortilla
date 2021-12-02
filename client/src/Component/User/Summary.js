@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 
 
@@ -48,16 +48,30 @@ function Summary() {
 
     }
 
-    function cancelReservation(id){
-        axios.post('http://localhost:8000/cancelChosenFlight', { id: id, email: email })
-        .then(() => {
-            setList(list.filter((val) => {
-                return val._id !== id;
-            }))
-        });
+
+    function cancelReservation(id) {
+        axios.post('http://localhost:8000/cancelReservedFlight', { id: id, email: email })
+            .then(() => {
+                setList(list.filter((val) => {
+                    return val._id !== id;
+                }))
+            })
+            .then((res) => {
+                axios.post('http://localhost:8000/sendCancelationEmail', { email: email })
+                    .then((res) => {
+                        console.log(res.data);
+                    })
+            })
+            .catch((err) => {
+                console.log(err);
+            });
     }
 
-
+    function uuidv4() {
+        return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
+          (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+        );
+      }
 
     return (
         <div className="Summary">
@@ -75,8 +89,9 @@ function Summary() {
                     <tbody>
                         {
                             list.map((flight) => {
-                                const price = flight.Price;
-                                const totalPrice = price * 2;
+                                //const price = flight.Price;
+                                //const totalPrice = price * 2;
+                                const confirmationId = uuidv4();
                                 return (
                                     <tr className='list'>
                                         <div key={flight._id}>
@@ -91,25 +106,30 @@ function Summary() {
                                                 <td>Arrival Airport <br /> {flight.ArrivalAirport}</td>
                                                 <td>Trip Duration <br /> {flight.TripDuration}</td>
                                                 <td>Price <br /> {flight.Price}</td>
-                                                <td>Total Ticket Price <br /> {totalPrice}</td>
-                                                <td>Confirmation Number <br /> {flight.Price}</td>
+                                                {/* <td>Total Ticket Price <br /> {totalPrice}</td> */}
+                                                <td>Confirmation Number <br /> {confirmationId}</td>
 
                                             </tr>
                                             <br />
                                             <td>Seat Number<br /> {seatsList.map((seat) => {
-                                                return (
-                                                    <tr>
-                                                        <td>{seat.Seat}</td>
-                                                    </tr>
-                                                )
+                                                if (seat.id === flight._id) {
+                                                    return (
+                                                        <tr>
+                                                            <td>{seat.Seat}</td>
+                                                        </tr>
+                                                    )
+                                                }
+
                                             })}</td>
 
                                             <td>Class Type {seatsList.map((seat) => {
-                                                return (
-                                                    <tr>
-                                                        <td>{seat.classtype}</td>
-                                                    </tr>
-                                                )
+                                                if (seat.id === flight._id) {
+                                                    return (
+                                                        <tr>
+                                                            <td>{seat.classtype}</td>
+                                                        </tr>
+                                                    )
+                                                }
                                             })}</td>
                                         </div>
                                         <br />
@@ -131,12 +151,7 @@ function Summary() {
                         }
                     </tbody>
                 </table>
-
             </div>
-
-
-
-
         </div>
     )
 

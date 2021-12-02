@@ -29,7 +29,7 @@ function CreateFlight() {
             BaggageAllowance: BaggageAllowance
 
         }).then(() => {
-            window.location.href = '/';
+            window.location.href = '/admin';
         }).catch((err) => {
             console.log(err);
         })

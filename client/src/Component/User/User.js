@@ -13,6 +13,9 @@ function User() {
                 <br />
                 <br />
                 <Link to="/reservedFlights">Go to My Reserved Flights </Link>
+                <br />
+                <br />
+                <Link to="/Summary">Go to My Chosen Flights </Link>
             </div>
         </div>
     )

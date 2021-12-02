@@ -299,60 +299,34 @@ app.post('/cancelChosenFlight', async (req, res) => {
 
   const f = await flight.findOne({ _id: ObjectId(cancelFlightId) });
 
+
   for (var i = 0; i < records.length; i++) {
-    if (cancelFlightId == records[i]._id) {
+    if (cancelFlightId + "" == records[i]._id + "") {
       records.splice(i,1);
       await User.save();
     }
   }
 
-  const len = User.Seats.length;
+  const len = (User.Seats.length) - 1;
 
-  const index = [];
-  //console.log(len)
+  console.log(User.Seats.length);
 
-  for(var i = 0; i < len; i++){
-    if(cancelFlightId == User.Seats[i].id){
-      //if (User.Seats[i].classtype === "Business") {
-        index.push(User.Seats[i].id);
-      //}
-    }
+  for (var i = 0; i < len; i++) {
+    console.log("1")
+      if ((User.Seats[i].classtype === "Business") && (cancelFlightId + "" == User.Seats[i].id + "")) {
+        console.log("2")
+        //f.BusSeats.push(User.Seats[i].number);
+        User.Seats.splice(i,1);
+      }
+      if ((User.Seats[i].classtype === "Economy") && (cancelFlightId + "" == User.Seats[i].id + "")) {
+        console.log("3")
+        //f.EcoSeats.push(User.Seats[i].number);
+        User.Seats.splice(i,1);
+      }
   }
 
-  //console.log(index.length)
-
-  for(var i = 0; i < index.length; i++){
-    console.log(index[i])
-    //User.Seats.splice(index[i],1);
-  }
+  //await f.save();
   await User.save();
-
-  // for (var i = 0; i < len; i++) {
-  //   console.log(cancelFlightId)
-  //   console.log("FFFFFFFFFFFFFF")
-  //   console.log(User.Seats[i].id)
-  //   if (cancelFlightId == User.Seats[i].id) {
-  //     console.log("1")
-  //     if (User.Seats[i].classtype === "Business") {
-  //       console.log("2")
-  //       f.BusSeats.push(User.Seats[i].number);
-  //       User.Seats.splice(i,1);
-  //       await f.save();
-  //       await User.save();
-  //     }
-  //     if (User.Seats[i].classtype === "Economy") {
-  //       console.log("3")
-  //       f.EcoSeats.push(User.Seats[i].number);
-  //       User.Seats.splice(i,1);
-  //       await f.save();
-  //       await User.save();
-  //     }
-  //   }
-  // }
-
-
-
- 
 
   res.status(200).send(records);
 

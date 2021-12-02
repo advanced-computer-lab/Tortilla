@@ -17,13 +17,23 @@ function ReservedFlights() {
     }
 
     function cancelReservation(id) {
-        axios.post('http://localhost:8000/cancelReservedFlight', { id: id, email: email })
+        axios.post('http://localhost:8000/cancelChosenFlight', { id: id, email: email })
             .then(() => {
                 setReservedFlights(reservedFlights.filter((val) => {
                     return val._id !== id;
                 }))
+            })
+            .then((res) => {
+                axios.post('http://localhost:8000/sendCancelationEmail', { email: email })
+                    .then((res) => {
+                        console.log(res.data);
+                    })
+            })
+            .catch((err) => {
+                console.log(err);
             });
     }
+
 
     return (
         <div>

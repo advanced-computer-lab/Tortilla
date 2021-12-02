@@ -42,6 +42,14 @@ const flightSchema = new Schema({
         type: Number,
         required: true
     },
+    EcoSeats: {
+        type: Array,
+        required: false
+    },
+    BusSeats: {
+        type: Array,
+        required: false
+    },
     isAvailable: {
         type: Boolean,
         required: false
