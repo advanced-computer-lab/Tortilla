@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useState } from 'react';
+import './UserSearch.css'
 
 function UserSearch() {
 
@@ -30,7 +31,7 @@ function UserSearch() {
 
             <label>DepartureDateAndTime</label>
             <br />
-            <input type='datetime-local' onChange={e => {
+            <input className ="SearchBox" type='datetime-local' onChange={e => {
                 setDepartureDateAndTime(e.target.value);
             }} />
 
@@ -38,16 +39,21 @@ function UserSearch() {
             <br />
             <label>ArrivalDateAndTime</label>
             <br />
-            <input type='datetime-local' onChange={e => {
+            <input className ="SearchBox" type='datetime-local' onChange={e => {
                 setArrivalDateAndTime(e.target.value);
             }} />
             <br />
             <br />
-            <button onClick={Search}> Search </button>
+
+            <button className= 'btn' onClick={Search}> Search </button>
+                
 
             <br />
             <br />
-            <h1> Search Results </h1>
+            <h1> Search results </h1>
+            <br />
+            <br />
+
             <div>
                 {
                     SearchList.filter((val) => {
@@ -56,23 +62,44 @@ function UserSearch() {
                         return (
                             <div className='list'>
                                 <div key={flight._id}>
-                                    <li>FlightNumber :{flight.FlightNumber}</li>
-                                    <li>ArrivalDateAndTime :{flight.ArrivalDateAndTime}</li>
-                                    <li>DepartureDateAndTime :{flight.DepartureDateAndTime}</li>
-                                    <li>NumberOfEconomySeats :{flight.NumberOfEconomySeats}</li>
-                                    <li>NumberOfBusinessClassSeats :{flight.NumberOfBusinessClassSeats}</li>
-                                    <li>Airport :{flight.Airport}</li>
-                                    <li>ArrivalAirport :{flight.ArrivalAirport}</li>
-                                    <li>TripDuration :{flight.TripDuration}</li>
-                                    <li>Price :{flight.Price}</li>
-                                    <li>BaggageAllowance In Kg :{flight.BaggageAllowance}</li>
-                                </div>
-                                <button onClick={() => {
-                                    var result = window.confirm("Are You Sure Want to delete?");
+                                    <table>
+                                        <tr>
+                                    <th>FlightNumber</th>
+                                    <th>ArrivalTime</th>
+                                    <th>DepartureDateAndTime</th>
+                                    <th>NumberOfEconomySeats</th>
+                                    <th>NumberOfBusinessClassSeats</th>
+                                    <th>Airport</th>
+                                    <th>ArrivalAirport</th>
+                                    <th>TripDuration</th>
+                                    <th>Price</th>
+                                    <th>BaggageAllowance</th>
+                                        </tr>
+                                        <tr>
+                                            <td>{flight.FlightNumber}</td>
+                                            <td>{flight.ArrivalDateAndTime}</td>
+                                            <td>{flight.DepartureDateAndTime}</td>
+                                            <td>{flight.NumberOfEconomySeats}</td>
+                                            <td>{flight.NumberOfBusinessClassSeats}</td>
+                                            <td>{flight.Airport}</td>
+                                            <td>{flight.ArrivalAirport}</td>
+                                            <td>{flight.TripDuration}</td>
+                                            <td>{flight.Price}</td>
+                                            <td>{flight.BaggageAllowance}</td>
+                                        </tr>
+                                    </table>
+                                    <br />
+                                    <br />
+                                    <div className="btn1">
+                                    <button className = "btn" onClick={() => {
+                                    var result = window.confirm("Are You Sure Want to book this flight?");
                                     if (result) {
                                         BookFlight(flight._id);
                                     }
                                 }}> Book flight </button>
+                                </div>
+                                </div>
+                                
                                 <br />
                                 <br />
 

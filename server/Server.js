@@ -20,43 +20,6 @@ mongoose.connect(process.env.MongoURI, { useNewUrlParser: true, useUnifiedTopolo
 
 
 
-//Send Email 
-// app.post('/sendCancelationEmail', (req, res) => {
-
-//   const userEmail = req.body.email;
-
-//   console.log("hhhhhhhh");
-
-//   const transporter = nodemailer.createTransport({
-//     service: 'gmail',
-//     auth: {
-//       user: "",
-//       pass: ""
-//     }
-//   });
-
-//   const mailOptions = {
-//     from: "",
-//     to: "",
-//     subject: 'This is a cancelation mail',
-//     text: 'Hello user, we want to infrom you that your flight has been canceled'
-//   }
-
-//   transporter.sendMail(mailOptions, function (err, info) {
-//     if (err) {
-//       console.log(err);
-//     } else {
-//       console.log('Email sent : ' + info.response);
-//       res.status(200).send({ message: 'Email sent' });
-//     }
-//   })
-
-// });
-
-//End
-
-
-
 
 app.post('/bookFlight', async (req, res) => {
 
@@ -270,8 +233,6 @@ app.post('/SummaryChosen', async (req, res) => {
 });
 
 
-
-
 app.post('/cancelReservedFlight', async (req, res) => {
   const Email = req.body.email;
   const cancelFlightId = req.body.id;
@@ -281,7 +242,7 @@ app.post('/cancelReservedFlight', async (req, res) => {
 
   for (var i = 0; i < records.length; i++) {
     if (cancelFlightId + "" == records[i]._id + "") {
-      records.splice(i,1);
+      records.splice(i, 1);
       await User.save();
     }
   }
@@ -301,7 +262,7 @@ app.post('/cancelChosenFlight', async (req, res) => {
 
   for (var i = 0; i < records.length; i++) {
     if (cancelFlightId == records[i]._id) {
-      records.splice(i,1);
+      records.splice(i, 1);
       await User.save();
     }
   }
@@ -309,50 +270,26 @@ app.post('/cancelChosenFlight', async (req, res) => {
   const len = User.Seats.length;
 
   const index = [];
-  //console.log(len)
 
-  for(var i = 0; i < len; i++){
-    if(cancelFlightId == User.Seats[i].id){
-      //if (User.Seats[i].classtype === "Business") {
-        index.push(User.Seats[i].id);
-      //}
+  for (var i = 0; i < len; i++) {
+    if (cancelFlightId == User.Seats[i].id) {
+      index.push(User.Seats[i]);
+      if (User.Seats[i].classtype === "Business") {
+        f.BusSeats.push(User.Seats[i].Seat);
+      }
+      if (User.Seats[i].classtype === "Economy") {
+        f.EcoSeats.push(User.Seats[i].Seat);
+      }
     }
   }
+  await f.save();
 
-  //console.log(index.length)
 
-  for(var i = 0; i < index.length; i++){
-    console.log(index[i])
-    //User.Seats.splice(index[i],1);
+  for (var i = 0; i < index.length; i++) {
+    const place = User.Seats.indexOf(index[i])
+    User.Seats.splice(place, 1);
   }
   await User.save();
-
-  // for (var i = 0; i < len; i++) {
-  //   console.log(cancelFlightId)
-  //   console.log("FFFFFFFFFFFFFF")
-  //   console.log(User.Seats[i].id)
-  //   if (cancelFlightId == User.Seats[i].id) {
-  //     console.log("1")
-  //     if (User.Seats[i].classtype === "Business") {
-  //       console.log("2")
-  //       f.BusSeats.push(User.Seats[i].number);
-  //       User.Seats.splice(i,1);
-  //       await f.save();
-  //       await User.save();
-  //     }
-  //     if (User.Seats[i].classtype === "Economy") {
-  //       console.log("3")
-  //       f.EcoSeats.push(User.Seats[i].number);
-  //       User.Seats.splice(i,1);
-  //       await f.save();
-  //       await User.save();
-  //     }
-  //   }
-  // }
-
-
-
- 
 
   res.status(200).send(records);
 
@@ -432,10 +369,12 @@ app.post('/SetSeats', async (req, res) => {
 
   const myflight = await flight.findOne({ _id: ObjectId(F_ID) });
   if (classtype == "Business") {
-    myflight.BusSeats.splice(SeatIndex, 1);
+    const place = myflight.BusSeats.indexOf(Seat);
+    myflight.BusSeats.splice(place, 1);
   }
   if (classtype == "Economy") {
-    myflight.EcoSeats.splice(SeatIndex, 1);
+    const place1 = myflight.EcoSeats.indexOf(Seat);
+    myflight.EcoSeats.splice(place1, 1);
   }
   await myflight.save();
 
@@ -443,19 +382,9 @@ app.post('/SetSeats', async (req, res) => {
 });
 
 
-
-
-
 app.listen(8000, () => {
   console.log(`Listening to requests on http://localhost:${8000}`);
 });
-
-
-
-
-
-
-
 
 
 

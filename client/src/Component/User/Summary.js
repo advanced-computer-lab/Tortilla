@@ -75,13 +75,13 @@ function Summary() {
 
     return (
         <div className="Summary">
-            <input type="email" placeholder="Enter your Email..." onChange={(e) => setEmail(e.target.value)} />
+            <input className="SearchBox" type="email" placeholder="Enter your Email..." onChange={(e) => setEmail(e.target.value)} />
             <br />
             <br />
 
-            <button onClick={View}> View </button>
+            <button className="btn" onClick={View}> View </button>
 
-            <h1> My Summary </h1>
+            <h1> My chosen flights </h1>
 
             <div>
                 <table>
@@ -96,20 +96,32 @@ function Summary() {
                                     <tr className='list'>
                                         <div key={flight._id}>
                                             <tr id='list'>
-                                                <td>Flight Type <br /> {flight.FlightType}</td>
-                                                <td>Flight Number <br /> {flight.FlightNumber}</td>
-                                                <td>Departure Date <br /> {flight.DepartureDateAndTime}</td>
-                                                <td>Arrival Date <br /> {flight.ArrivalDateAndTime}</td>
-                                                <td>Economy Class Seats <br /> {flight.NumberOfEconomySeats}</td>
-                                                <td>Business Class Seats <br /> {flight.NumberOfBusinessClassSeats}</td>
-                                                <td>Departure Airport <br /> {flight.Airport}</td>
-                                                <td>Arrival Airport <br /> {flight.ArrivalAirport}</td>
-                                                <td>Trip Duration <br /> {flight.TripDuration}</td>
-                                                <td>Price <br /> {flight.Price}</td>
+                                                <th>Flight Type</th> 
+                                                <th>Flight Number</th> 
+                                                <th>Departure Date</th> 
+                                                <th>Arrival Date</th>
+                                                <th>Economy Class Seats</th> 
+                                                <th>Business Class Seats </th>
+                                                <th>Departure Airport</th> 
+                                                <th>Arrival Airport</th> 
+                                                <th>Trip Duration </th>
+                                                <th>Price </th>
                                                 {/* <td>Total Ticket Price <br /> {totalPrice}</td> */}
-                                                <td>Confirmation Number <br /> {confirmationId}</td>
-
+                                                <th>Confirmation Number</th>
                                             </tr>
+                                            <tr>
+                                            <td>{flight.FlightType}</td>
+                                            <td>{flight.FlightNumber}</td>
+                                            <td> {flight.DepartureDateAndTime}</td>
+                                            <td> {flight.ArrivalDateAndTime}</td>
+                                            <td> {flight.NumberOfEconomySeats}</td>
+                                            <td> {flight.NumberOfBusinessClassSeats}</td>
+                                            <td> {flight.Airport}</td>
+                                            <td>{flight.ArrivalAirport}</td>
+                                            <td>{flight.TripDuration}</td>
+                                            <td>{flight.Price}</td>
+                                            <td> {confirmationId}</td>
+                                                </tr>
                                             <br />
                                             <td>Seat Number<br /> {seatsList.map((seat) => {
                                                 if (seat.id === flight._id) {
@@ -134,9 +146,9 @@ function Summary() {
                                         </div>
                                         <br />
                                         <br />
-                                        <button onClick={() => clicked(flight._id)}> Choose my seats  </button>
-                                        <button onClick={() => confirm(flight._id)}> Confirm Your Book Now  </button>
-                                        <button onClick={() => {
+                                        <button className="btn" onClick={() => clicked(flight._id)}> Choose my seats  </button>
+                                        <button className="btn" onClick={() => confirm(flight._id)}> Confirm Your Book Now  </button>
+                                        <button className="btn" onClick={() => {
                                             var result = window.confirm("Are You Sure Want to cancel?");
                                             if (result) {
                                                 cancelReservation(flight._id);

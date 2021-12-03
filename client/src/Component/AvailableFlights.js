@@ -45,18 +45,11 @@ function AvailableFlights() {
     return (
 
         <div className='Adminstartor'>
-
-            <br />
-            <br />
-            <Link to='/userSearch'> Search For A Flight By Date</Link>
-
-            <br />
-            <br />
             <form>
                 <label>
                     Choose FlightType :
                     <br />
-                    <select onChange={(e) => setFlightType(e.target.value)}>
+                    <select className ="SearchBox" onChange={(e) => setFlightType(e.target.value)}>
                         <option value="Default"> Default </option>
                         <option value="Departure"> Departure</option>
                         <option value="Return"> Return </option>
@@ -65,19 +58,19 @@ function AvailableFlights() {
             </form>
             <br />
             <br />
-            <input type='text' placeholder='Search Number Of Passengers...' onChange={e => {
+            <input className ="SearchBox"type='text' placeholder='Search Number Of Passengers...' onChange={e => {
                 setSearchNumberOfPassengers(e.target.value);
             }} />
             <br />
             <br />
 
-            <input type='text' placeholder='Search Departure Airport...' onChange={e => {
+            <input className ="SearchBox" type='text' placeholder='Search Departure Airport...' onChange={e => {
                 setSearchAirport(e.target.value);
             }} />
             <br />
             <br />
 
-            <input type='text' placeholder='Search Arrival Airport...' onChange={e => {
+            <input className ="SearchBox" type='text' placeholder='Search Arrival Airport...' onChange={e => {
                 setSearchArrivalAirport(e.target.value);
             }} />
             <br />
@@ -88,7 +81,7 @@ function AvailableFlights() {
                     <label>
                         Choose Your Cabin :
                         <br />
-                        <select onChange={handleChange}>
+                        <select className ="SearchBox" onChange={handleChange}>
                             <option value="Default"> Default </option>
                             <option value="Business"> Business Class</option>
                             <option value="Economy"> Economy Class</option>
@@ -137,10 +130,7 @@ function AvailableFlights() {
                             <input type='number' placeholder='Business...' onChange={e => {
                                 setNumberOfReservedBusiness(e.target.value);
                             }} />
-                            <button className="button" onClick={() => {
-                                BookFlight(flight._id)
-                                window.confirm("Your Flight is Added")
-                            }}> Add To Choose Your Seat</button>
+                            <button onClick={() => { BookFlight(flight._id) }}> Book </button>
                         </div>
                     </h3>
                 )

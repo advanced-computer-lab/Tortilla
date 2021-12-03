@@ -59,7 +59,7 @@ console.log(BusSeats)
             <div>
                 {
                    
-                   BusSeats.map((e, i) => <span key={i}>{<button onClick={() => clicked(i,e, "Business")}> {e} </button>}</span>)
+                   BusSeats.map((e, i) => <span key={i}>{<button className="btn" onClick={() => clicked(i,e, "Business")}> {e} </button>}</span>)
 
                 }
             </div>
@@ -69,7 +69,7 @@ console.log(BusSeats)
 
             <div>
                 {
-                     EcoSeats.map((e, i) => <span key={i}>{<button onClick={() => clicked(i,e, "Economy")} > {e} </button>}</span>)
+                     EcoSeats.map((e, i) => <span key={i}>{<button className="btn" onClick={() => clicked(i,e, "Economy")} > {e} </button>}</span>)
 
                 }
             </div>
@@ -78,7 +78,7 @@ console.log(BusSeats)
                 <br/>
                 <br/>
                 <br/>
-                <button onClick={done}> Done </button>
+                <button className="btn" onClick={done}> Done </button>
 
         </div>
     )

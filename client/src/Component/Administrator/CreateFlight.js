@@ -3,7 +3,6 @@ import React, { useState } from 'react'
 
 function CreateFlight() {
     const [FlightType, setFlightType] = useState("");
-
     const [ArrivalDateAndTime, setArrivalDateAndTime] = useState();
     const [DepartureDateAndTime, setDepartureDateAndTime] = useState();
     const [FlightNumber, setFlightNumber] = useState("");
@@ -29,7 +28,7 @@ function CreateFlight() {
             BaggageAllowance: BaggageAllowance
 
         }).then(() => {
-            window.location.href = '/admin';
+            window.location.href = '/';
         }).catch((err) => {
             console.log(err);
         })
@@ -42,68 +41,68 @@ function CreateFlight() {
 
     return (
         <div className='CreateFlight'>
-            <form>
-                <label>
-                    Choose Flight Type :
-                    <br />
-                    <select onChange={handleChange}>
-                        <option value="Default"> Default </option>
-                        <option value="Departure"> Departure</option>
-                        <option value="Return"> Return </option>
-                    </select>
-                </label>
-            </form>
-            <br />
-            <label>DepartureDateAndTime</label>
-            <br />
-            <input type='datetime-local' onChange={e => {
-                setDepartureDateAndTime(e.target.value);
-            }} />
-            <br />
-            <br />
-            <label>ArrivalDateAndTime</label>
-            <br />
-            <input type='datetime-local' onChange={e => {
-                setArrivalDateAndTime(e.target.value);
-            }} />
-            <br />
-            <br />
-            <input type='text' placeholder='FlightNumber...' onChange={e => {
-                setFlightNumber(e.target.value);
-            }} />
-            <br />
-            <br />
-            <input type='text' placeholder='NumberOfEconomySeats...' onChange={e => {
-                setNumberOfEconomySeats(e.target.value);
-            }} />
-            <br />
-            <br />
-            <input type='text' placeholder='NumberOfBusinessClassSeats...' onChange={e => {
-                setNumberOfBusinessClassSeats(e.target.value);
-            }} />
-            <br />
-            <br />
-            <input type='text' placeholder='Departure Airport...' onChange={e => {
-                setAirport(e.target.value);
-            }} />
-            <br />
-            <br />
-            <input type='text' placeholder='Arrival Airport...' onChange={e => {
-                setArrivalAirport(e.target.value);
-            }} />
-            <br />
-            <br />
-            <input type='text' placeholder='Price...' onChange={e => {
-                setPrice(e.target.value);
-            }} />
-            <br />
-            <br />
-            <input type='text' placeholder='Baggage Allowance...' onChange={e => {
-                setBaggageAllowance(e.target.value);
-            }} />
-            <br />
-            <br />
-            <button onClick={Create}> Create Flight </button>
+                <form>
+                    <label>
+                        Choose Flight Type :
+                        <br />
+                        <select onChange={handleChange}>
+                            <option value="Default"> Default </option>
+                            <option value="Departure"> Departure</option>
+                            <option value="Return"> Return </option>
+                        </select>
+                    </label>
+                </form>
+                <br />
+                <label>DepartureDateAndTime</label>
+                <br />
+                <input type='datetime-local' onChange={e => {
+                    setDepartureDateAndTime(e.target.value);
+                }} />
+                <br />
+                <br />
+                <label>ArrivalDateAndTime</label>
+                <br />
+                <input type='datetime-local' onChange={e => {
+                    setArrivalDateAndTime(e.target.value);
+                }} />
+                <br />
+                <br />
+                <input type='text' placeholder='FlightNumber...' onChange={e => {
+                    setFlightNumber(e.target.value);
+                }} />
+                <br />
+                <br />
+                <input type='text' placeholder='NumberOfEconomySeats...' onChange={e => {
+                    setNumberOfEconomySeats(e.target.value);
+                }} />
+                <br />
+                <br />
+                <input type='text' placeholder='NumberOfBusinessClassSeats...' onChange={e => {
+                    setNumberOfBusinessClassSeats(e.target.value);
+                }} />
+                <br />
+                <br />
+                <input type='text' placeholder='Departure Airport...' onChange={e => {
+                    setAirport(e.target.value);
+                }} />
+                <br />
+                <br />
+                <input type='text' placeholder='Arrival Airport...' onChange={e => {
+                    setArrivalAirport(e.target.value);
+                }} />
+                <br />
+                <br />
+                <input type='text' placeholder='Price...' onChange={e => {
+                    setPrice(e.target.value);
+                }} />
+                <br />
+                <br />
+                <input type='text' placeholder='Baggage Allowance...' onChange={e => {
+                    setBaggageAllowance(e.target.value);
+                }} />
+                <br />
+                <br />
+                <button onClick={Create}> Create Flight </button>
         </div>
     )
 }

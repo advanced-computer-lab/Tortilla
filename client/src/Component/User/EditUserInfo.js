@@ -31,21 +31,31 @@ function EditUserInfo() {
 
     return (
         <div className="EditUserInfo">
-            <input type="email" placeholder="Enter your current email..." onChange={(e) => setCurrentEmail(e.target.value)} />
+            <input className ="SearchBox" type="email" placeholder="Enter your current email..." onChange={(e) => setCurrentEmail(e.target.value)} />
             <br />
             <br />
-            <input type="text" placeholder="Enter old first Name..." onChange={(e) => setOldFirstName(e.target.value)} />
-            <input type="text" placeholder="Enter new first Name..." onChange={(e) => setNewFirstName(e.target.value)} />
-
-            <input type="text" placeholder="Enter old last Name..." onChange={(e) => setOldLastName(e.target.value)} />
-            <input type="text" placeholder="Enter new last Name..." onChange={(e) => setNewLastName(e.target.value)} />
-
-            <input type="text" placeholder="Enter old passport number..." onChange={(e) => setOldPassportNumber(e.target.value)} />
-            <input type="text" placeholder="Enter new passport number..." onChange={(e) => setNewPassportNumber(e.target.value)} />
-
-            <input type="email" placeholder="Enter new email..." onChange={(e) => setNewEmail(e.target.value)} />
-
-            <button onClick={EditInfo}> Edit </button>
+            <input className ="SearchBox" type="text" placeholder="Enter old first Name..." onChange={(e) => setOldFirstName(e.target.value)} />
+            <br />
+            <br />
+            <input className ="SearchBox" type="text" placeholder="Enter new first Name..." onChange={(e) => setNewFirstName(e.target.value)} />
+            <br />
+            <br />
+            <input className ="SearchBox" type="text" placeholder="Enter old last Name..." onChange={(e) => setOldLastName(e.target.value)} />
+            <br />
+            <br />
+            <input className ="SearchBox" type="text" placeholder="Enter new last Name..." onChange={(e) => setNewLastName(e.target.value)} />
+            <br />
+            <br />
+            <input className ="SearchBox" type="text" placeholder="Enter old passport number..." onChange={(e) => setOldPassportNumber(e.target.value)} />
+            <br />
+            <br />
+            <input className ="SearchBox" type="text" placeholder="Enter new passport number..." onChange={(e) => setNewPassportNumber(e.target.value)} />
+            <br />
+            <br />
+            <input className ="SearchBox" type="email" placeholder="Enter new email..." onChange={(e) => setNewEmail(e.target.value)} />
+            <br />
+            <br />
+            <button className="btn" onClick={EditInfo}> Edit </button>
         </div>
     )
 }

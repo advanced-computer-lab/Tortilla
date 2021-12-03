@@ -1,8 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200&family=Outfit:wght@200;300&display=swap" rel="stylesheet">
+    <style>
+      body{
+        background-image: url('https://images.hdqwalls.com/wallpapers/white-cube-pattern-4k-bu.jpg');
+        background-position: center;
+      }
+    </style>
     <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    
+    <link rel="icon" href="https://lh3.googleusercontent.com/4WyvQNRuc3QGXNGWjU8-Xcq59l9EY2ExTxBBFjwH3-jHypAhUKG0YAFyHHpgJPK9yHVEAZ39OpYqI4kJm5_NLWmMSgq596CEjAKbw5zfQuFWBcCnjeTQ-IK8Y8ej71Rmbr-_WZECT90rD_NLUc-rsuvOlpjpsUIDgqozYG_u93QU1ZNu3xz9Gqna9eM92L90ade2wWJ5RMRmXM1UkGJPoy4NOox_GPU2GsIfZYssYPObikrn7iRgoe-zep5uR_MdJqm_G7LlpY0ObztBWP_hQ9n9ljdF-PCvoDUZbUzXDE4x5q77vC-vznpKt5mQoHEaovkjHwnnNbw9ErWOR99PMEfVtdmYjwiCvhJwhurBzbs0TYnk6MPLXJPAyxmNyzxBhGgRFbxrXk59hSlPHCYbkwL7wtY-0dLdgE4kEFnSqrUbb_1bExY_SUO4T3hgMKxMvH3ZKykZwrsyxmeTwSmCB8mGQi4Z-Gbg7nuwcfVYBOKyIgvRZVjAJEd4wY-J7VRzlpObVPisLRlcXRo4jUrsb306g-yFDev90OpQTy10iDkn4Gbdw3hDIhKjqGcs-rN8difNhAqdi7hKpbuJaLqzRE1MwejqKKSYXubDrM3RdhjHjCIUi4FaO6puY3CeX3cgOeZZAVH7t09JGo9VdgMmrAQ033MlA6utAfTr_8fJ2NvdNumdBb-WIVfhfLEVM80000KDs5wHmAYxx2u5RDujHBs=s120-no?authuser=0" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
     <meta
@@ -24,9 +35,24 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
-    <title>React App</title>
+    <title>Tortilla airlines</title>
   </head>
   <body>
+    <section class="header">
+      <nav>
+        <a href="http://localhost:3000/"><img src="https://lh3.googleusercontent.com/4WyvQNRuc3QGXNGWjU8-Xcq59l9EY2ExTxBBFjwH3-jHypAhUKG0YAFyHHpgJPK9yHVEAZ39OpYqI4kJm5_NLWmMSgq596CEjAKbw5zfQuFWBcCnjeTQ-IK8Y8ej71Rmbr-_WZECT90rD_NLUc-rsuvOlpjpsUIDgqozYG_u93QU1ZNu3xz9Gqna9eM92L90ade2wWJ5RMRmXM1UkGJPoy4NOox_GPU2GsIfZYssYPObikrn7iRgoe-zep5uR_MdJqm_G7LlpY0ObztBWP_hQ9n9ljdF-PCvoDUZbUzXDE4x5q77vC-vznpKt5mQoHEaovkjHwnnNbw9ErWOR99PMEfVtdmYjwiCvhJwhurBzbs0TYnk6MPLXJPAyxmNyzxBhGgRFbxrXk59hSlPHCYbkwL7wtY-0dLdgE4kEFnSqrUbb_1bExY_SUO4T3hgMKxMvH3ZKykZwrsyxmeTwSmCB8mGQi4Z-Gbg7nuwcfVYBOKyIgvRZVjAJEd4wY-J7VRzlpObVPisLRlcXRo4jUrsb306g-yFDev90OpQTy10iDkn4Gbdw3hDIhKjqGcs-rN8difNhAqdi7hKpbuJaLqzRE1MwejqKKSYXubDrM3RdhjHjCIUi4FaO6puY3CeX3cgOeZZAVH7t09JGo9VdgMmrAQ033MlA6utAfTr_8fJ2NvdNumdBb-WIVfhfLEVM80000KDs5wHmAYxx2u5RDujHBs=s120-no?authuser=0"></a>
+        <div class="nav-links">
+          <ul>
+            <li><a href="http://localhost:3000/availableFlights">Book my flight</a></li>
+            <li><a href="http://localhost:3000/userSearch">Search</a></li>
+            <li><a href="http://localhost:3000/reservedFlights">My reserved flights</a></li>
+            <li><a href="http://localhost:3000/editUserInfo">Edit my info</a></li>
+            <li><a href="http://localhost:3000/Summary">Chosen flights</a></li>
+
+          </ul>
+        </div>
+      </nav>
+    </section>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
     <!--

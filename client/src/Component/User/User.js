@@ -1,22 +1,13 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-
+import './User.css'
 function User() {
 
     return (
-        <div className="user">
-            <div className="editLink">
-                <Link to="/editUserInfo"> Edit Your Information </Link>
-                <br />
-                <br />
-                <Link to="/availableFlights"> Book Now </Link>
-                <br />
-                <br />
-                <Link to="/reservedFlights">Go to My Reserved Flights </Link>
-                <br />
-                <br />
-                <Link to="/Summary">Go to My Chosen Flights </Link>
-            </div>
+        <div class="textb">
+            <h1>Welcome to tortilla airlines</h1>
+            <p>You'll love the way we fly!</p>
+            <a href="http://localhost:3000/availableFlights" class="button">Book my flight now</a>
         </div>
     )
 }

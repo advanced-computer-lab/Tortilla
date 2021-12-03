@@ -1,7 +1,17 @@
 .update{
-    text-align: right;
+    text-align: center;
 }
 
 .list {
     text-align: left;
+}
+
+.SearchBox{
+    margin: auto;
+    position: relative;
+    width: 200px;
+    height: 32px;
+    border: 4px solid #323942;
+    padding: 0px 10px;
+    border-radius: 50px;
 }
