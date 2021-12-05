@@ -1,0 +1,30 @@
+
+.textb{
+    width: 90%;
+    color:#002C6F;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    text-align: center;
+}
+.textb p{
+    margin: 10px 0 40px;
+    font-size: 20px;
+}
+.button{
+    display: inline-block;
+    text-decoration: none;
+    color: #000000;
+    border: 1px solid #002C6F;
+    padding: 12px 34px;
+    font-size: 15px;
+    background: transparent;
+    position: relative;
+    cursor: pointer;
+}
+.button:hover{
+    border: 1px solid #002C6F;
+    background: #002C6F ;
+    transition: 1s;
+}
