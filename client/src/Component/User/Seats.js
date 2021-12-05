@@ -12,9 +12,8 @@ function Seats() {
 
         axios.get('http://localhost:8000/PostID&Email')
             .then((response) => {
-                FlightID= (response.data.F_ID);
+                FlightID = (response.data.F_ID);
                 setemail(response.data.UserEmail);
-               // console.log(FlightID)
             }).then((err) => {
                 axios.post('http://localhost:8000/GetFlight', {
                     fid: FlightID,
@@ -22,24 +21,22 @@ function Seats() {
                 }).then((response) => {
                      setEcoSeats(response.data.EcoSeats);
                      setBusSeats(response.data.BusSeats);
-                  console.log(response.data.EcoSeats)
-
                 }).catch(err => {
                     console.log(err);
                 })
             }).catch((err) => {
-
+                console.log(err);
             })
     }, []);
-   // console.log(FlightID)
+
     function clicked(i,e, classtype) {
-        console.log(i);
         axios.post('http://localhost:8000/SetSeats', {
             seat: e,
             number: i,
             email: email,
             classtype: classtype
         }).then((response) => {
+            window.location.href = '/Summary';
         }).catch(err => {
             console.log(err);
         })
@@ -48,7 +45,6 @@ function Seats() {
 
     function done(){
         window.location.href = '/Summary';
-
     }
 
 console.log(BusSeats)

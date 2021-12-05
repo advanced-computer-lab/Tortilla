@@ -19,7 +19,37 @@ mongoose.connect(process.env.MongoURI, { useNewUrlParser: true, useUnifiedTopolo
   .catch(err => console.log(err));
 
 
+app.post('/sendCancelationEmail', (req, res) => {
 
+  const userEmail = req.body.email;
+
+  const f = await flight.findOne({ _id: ObjectId(req.body.id) });
+
+  const transporter = nodemailer.createTransport({
+    service: "hotmail",
+    auth: {
+      user: "ACL.600@outlook.com",
+      pass: "acl123456"
+    },
+  });
+
+  const mailOptions = {
+    from: 'ACL.600@outlook.com',
+    to: userEmail,
+    subject: 'This is a cancelation mail',
+    text: `Hello user, we want to infrom you that your flight has been canceled. Amount to be refunded ${f.Price}`
+  }
+
+  transporter.sendMail(mailOptions, function (err, info) {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log('Email sent : ' + info.response);
+      res.status(200).send({ message: 'Email sent' });
+    }
+  })
+
+});
 
 app.post('/bookFlight', async (req, res) => {
 
