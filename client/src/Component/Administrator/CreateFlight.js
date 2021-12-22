@@ -28,7 +28,7 @@ function CreateFlight() {
             BaggageAllowance: BaggageAllowance
 
         }).then(() => {
-            window.location.href = '/';
+            window.location.href = '/admin';
         }).catch((err) => {
             console.log(err);
         })
@@ -45,7 +45,7 @@ function CreateFlight() {
                     <label>
                         Choose Flight Type :
                         <br />
-                        <select onChange={handleChange}>
+                        <select className = "SearchBox" onChange={handleChange}>
                             <option value="Default"> Default </option>
                             <option value="Departure"> Departure</option>
                             <option value="Return"> Return </option>
@@ -55,54 +55,54 @@ function CreateFlight() {
                 <br />
                 <label>DepartureDateAndTime</label>
                 <br />
-                <input type='datetime-local' onChange={e => {
+                <input className = "SearchBox" type='datetime-local' onChange={e => {
                     setDepartureDateAndTime(e.target.value);
                 }} />
                 <br />
                 <br />
                 <label>ArrivalDateAndTime</label>
                 <br />
-                <input type='datetime-local' onChange={e => {
+                <input className = "SearchBox" type='datetime-local' onChange={e => {
                     setArrivalDateAndTime(e.target.value);
                 }} />
                 <br />
                 <br />
-                <input type='text' placeholder='FlightNumber...' onChange={e => {
+                <input className = "SearchBox" type='text' placeholder='FlightNumber...' onChange={e => {
                     setFlightNumber(e.target.value);
                 }} />
                 <br />
                 <br />
-                <input type='text' placeholder='NumberOfEconomySeats...' onChange={e => {
+                <input className = "SearchBox" type='text' placeholder='NumberOfEconomySeats...' onChange={e => {
                     setNumberOfEconomySeats(e.target.value);
                 }} />
                 <br />
                 <br />
-                <input type='text' placeholder='NumberOfBusinessClassSeats...' onChange={e => {
+                <input className = "SearchBox" type='text' placeholder='NumberOfBusinessClassSeats...' onChange={e => {
                     setNumberOfBusinessClassSeats(e.target.value);
                 }} />
                 <br />
                 <br />
-                <input type='text' placeholder='Departure Airport...' onChange={e => {
+                <input className = "SearchBox" type='text' placeholder='Departure Airport...' onChange={e => {
                     setAirport(e.target.value);
                 }} />
                 <br />
                 <br />
-                <input type='text' placeholder='Arrival Airport...' onChange={e => {
+                <input className = "SearchBox" type='text' placeholder='Arrival Airport...' onChange={e => {
                     setArrivalAirport(e.target.value);
                 }} />
                 <br />
                 <br />
-                <input type='text' placeholder='Price...' onChange={e => {
+                <input className = "SearchBox" type='text' placeholder='Price...' onChange={e => {
                     setPrice(e.target.value);
                 }} />
                 <br />
                 <br />
-                <input type='text' placeholder='Baggage Allowance...' onChange={e => {
+                <input className = "SearchBox" type='text' placeholder='Baggage Allowance...' onChange={e => {
                     setBaggageAllowance(e.target.value);
                 }} />
                 <br />
                 <br />
-                <button onClick={Create}> Create Flight </button>
+                <button className = "btn" onClick={Create}> Create Flight </button>
         </div>
     )
 }

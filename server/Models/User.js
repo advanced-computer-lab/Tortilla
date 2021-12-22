@@ -10,6 +10,10 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
+    Username: {
+        type: String,
+        required: true,
+    },
     Password: {
         type: String,
         required: true
@@ -18,11 +22,19 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
-    type: {
-        type: String,
+    telephonenumbers: {
+        type: Array,
         required: true
     },
     PassportNumber: {
+        type: String,
+        required: true
+    },
+    homeAddress: {
+        type: String,
+        required: true
+    },
+    countryCode: {
         type: String,
         required: true
     },
@@ -36,6 +48,10 @@ const userSchema = new Schema({
     },
     Seats: {
         type: Array,
+        required: false
+    },
+    Token: {
+        type: String,
         required: false
     }
 }, { timestamps: true });

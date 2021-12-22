@@ -60,7 +60,7 @@ function Administrator() {
             <br />
             <br /><button className="button" onClick={() => {
                                
-                                   window.location.href="/create";
+                                   location.href="/create";
                                 
                             }}> Create flight </button>
             <br />

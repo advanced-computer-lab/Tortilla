@@ -9,6 +9,10 @@
   outline: 0;
 }
 
+#arr{
+  background-color: red;
+}
+
 .button{
   text-decoration: none;
   padding: 5px 5px;

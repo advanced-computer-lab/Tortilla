@@ -5,19 +5,16 @@ import axios from 'axios';
 function Seats() {
     const [EcoSeats, setEcoSeats] = useState([]);
     const [BusSeats, setBusSeats] = useState([]);
-    const [email, setemail] = useState();
     let FlightID;
+    const userToken = localStorage.getItem("user-token");
 
     useEffect(() => {
-
-        axios.get('http://localhost:8000/PostID&Email')
+        axios.get('http://localhost:8000/GetID')
             .then((response) => {
-                FlightID = (response.data.F_ID);
-                setemail(response.data.UserEmail);
+                FlightID= (response.data.F_ID);
             }).then((err) => {
                 axios.post('http://localhost:8000/GetFlight', {
                     fid: FlightID,
-                    Email: email
                 }).then((response) => {
                      setEcoSeats(response.data.EcoSeats);
                      setBusSeats(response.data.BusSeats);
@@ -25,18 +22,18 @@ function Seats() {
                     console.log(err);
                 })
             }).catch((err) => {
-                console.log(err);
+
             })
     }, []);
 
-    function clicked(i,e, classtype) {
+    function clicked(i, e, classtype) {
         axios.post('http://localhost:8000/SetSeats', {
             seat: e,
             number: i,
-            email: email,
+            token: userToken,
             classtype: classtype
         }).then((response) => {
-            window.location.href = '/Summary';
+            
         }).catch(err => {
             console.log(err);
         })
@@ -47,7 +44,6 @@ function Seats() {
         window.location.href = '/Summary';
     }
 
-console.log(BusSeats)
     return (
         <div>
             <h1> Business Class </h1>
@@ -55,7 +51,7 @@ console.log(BusSeats)
             <div>
                 {
                    
-                   BusSeats.map((e, i) => <span key={i}>{<button className="btn" onClick={() => clicked(i,e, "Business")}> {e} </button>}</span>)
+                   BusSeats.map((e, i) => <span key={i} >{<button className = "btn" onClick={() => clicked(i,e, "Business")}> {e} </button>}</span>)
 
                 }
             </div>
@@ -65,7 +61,7 @@ console.log(BusSeats)
 
             <div>
                 {
-                     EcoSeats.map((e, i) => <span key={i}>{<button className="btn" onClick={() => clicked(i,e, "Economy")} > {e} </button>}</span>)
+                    EcoSeats.map((e, i) => <span key={i}>{<button className="btn" onClick={() => clicked(i,e, "Economy")} > {e} </button>}</span>)
 
                 }
             </div>

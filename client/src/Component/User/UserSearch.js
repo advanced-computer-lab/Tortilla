@@ -12,7 +12,6 @@ function UserSearch() {
         axios.get('http://localhost:8000/getAllAvailableFlights')
             .then((response) => {
                 setSearchList(response.data);
-                console.log(response.data)
             }).catch((err) => {
                 console.log(err);
             })

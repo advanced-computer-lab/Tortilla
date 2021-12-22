@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import './AvailableFlights.css';
+
 
 function AvailableFlights() {
-    const [FlightType, setFlightType] = useState("");
 
     const [SearchNumberOfPassengers, setSearchNumberOfPassengers] = useState("");
     const [SearchAirport, setSearchAirport] = useState("");
@@ -12,84 +12,97 @@ function AvailableFlights() {
     const [list, setList] = useState([]);
     const [current, setcurrent] = useState("");
 
-    const [NumberOfReservedBusiness, setNumberOfReservedBusiness] = useState("");
-    const [NumberOfReservedEconomy, setNumberOfReservedEconomy] = useState("");
-    const [email, setEmail] = useState("");
+    const [ErrorMessage, setErrorMessage] = useState("");
+    const [Message, setMessage] = useState("");
+
+    var flightsArray = [];
+
+    const userToken = localStorage.getItem("user-token");
 
     useEffect(() => {
         axios.get('http://localhost:8000/getAllAvailableFlights')
             .then((response) => {
                 setList(response.data);
             }).catch(err => {
-                console.log(err);
+                setErrorMessage('No flights');
             })
-    }, [])
+    }, []);
 
     const handleChange = (event) => {
         setcurrent(event.target.value);
     }
 
-    function BookFlight(id) {
-        axios.post('http://localhost:8000/bookFlight', {
-            id: id,
-            email: email,
-            NumberOfReservedBusiness: NumberOfReservedBusiness,
-            NumberOfReservedEconomy: NumberOfReservedEconomy
-        })
-            .then((response) => {
-                console.log(response.data)
-            });
+    function BookFlight(flight, air, arrAir, flightType) {
+        if(userToken){
+            axios.post('http://localhost:8000/addFlightToChosen', {
+                chosenFlightId: flight._id,
+                token: userToken,
+            })
+                .then(() => {
+                    dis(air, arrAir, flightType);
+                    setMessage('Booked !');
+                });
+        }else{
+            var x = [];
+            x = localStorage.getItem('flightList');
+            var y = JSON.parse(x);
+            y.push(flight);
+            localStorage.setItem('flightList', JSON.stringify(y));
+        }
     }
 
+    function dis(air, arrAir, flightType){
+
+        if (flightType === "Departure") {
+            setMessage('Book Your return flight now !');
+        } else {
+            setMessage('Book another Departure flight now !');
+        }
+
+        setList(list.filter((val) => {return val.Airport === arrAir && val.ArrivalAirport === air }));
+    }
 
     return (
 
-        <div className='Adminstartor'>
+        <div className='availableFlights'>
             <form>
                 <label>
-                    Choose FlightType :
+                    Choose Your Cabin
                     <br />
-                    <select className ="SearchBox" onChange={(e) => setFlightType(e.target.value)}>
+                    <br />
+                    <select className="SearchBox" onChange={handleChange}>
                         <option value="Default"> Default </option>
-                        <option value="Departure"> Departure</option>
-                        <option value="Return"> Return </option>
+                        <option value="Business"> Business Class</option>
+                        <option value="Economy"> Economy Class</option>
                     </select>
                 </label>
             </form>
+
+            <h2>{ErrorMessage}</h2>
+
             <br />
             <br />
-            <input className ="SearchBox"type='text' placeholder='Search Number Of Passengers...' onChange={e => {
+            <input className="SearchBox" type='text' placeholder='Search Number Of Passengers...' onChange={e => {
                 setSearchNumberOfPassengers(e.target.value);
             }} />
             <br />
             <br />
 
-            <input className ="SearchBox" type='text' placeholder='Search Departure Airport...' onChange={e => {
+            <input className="SearchBox" type='text' placeholder='Search Departure Airport...' onChange={e => {
                 setSearchAirport(e.target.value);
             }} />
             <br />
             <br />
 
-            <input className ="SearchBox" type='text' placeholder='Search Arrival Airport...' onChange={e => {
+            <input className="SearchBox" type='text' placeholder='Search Arrival Airport...' onChange={e => {
                 setSearchArrivalAirport(e.target.value);
             }} />
             <br />
             <br />
-
-            <div>
-                <form>
-                    <label>
-                        Choose Your Cabin :
-                        <br />
-                        <select className ="SearchBox" onChange={handleChange}>
-                            <option value="Default"> Default </option>
-                            <option value="Business"> Business Class</option>
-                            <option value="Economy"> Economy Class</option>
-                        </select>
-                    </label>
-                </form>
-            </div>
             <h1> Available Flights </h1>
+            <br />
+            <br />
+            <h2>{Message}</h2>
             <br />
             <br />
             {list.filter((val) => {
@@ -99,10 +112,9 @@ function AvailableFlights() {
                 if (
                     (((val.NumberOfEconomySeats - SearchNumberOfPassengers) >= 0 && (current === "Economy"))
                         || ((val.NumberOfBusinessClassSeats - SearchNumberOfPassengers) >= 0 && (current === "Business")))
-                    || (val.FlightType === FlightType)
                     && Airport.includes(SearchAirport)
                     && ArrivalAirport.includes(SearchArrivalAirport)
-                ) { console.log(val); return val }
+                ) { return val }
             }).map(flight => {
                 const ArrivalDateAndTime = new Date(flight.ArrivalDateAndTime);
                 const DepartureDateAndTime = new Date(flight.DepartureDateAndTime);
@@ -110,27 +122,40 @@ function AvailableFlights() {
                 return (
                     <h3 key={flight._id}>
                         <div className='list'>
-                            <li>Flight Type :{flight.FlightType}</li>
-                            <li>FlightNumber :{flight.FlightNumber}</li>
-                            <li>DepartureDateAndTime :{flight.DepartureDateAndTime}</li>
-                            <li>ArrivalDateAndTime :{flight.ArrivalDateAndTime}</li>
-                            <li>NumberOfEconomySeats :{flight.NumberOfEconomySeats}</li>
-                            <li>NumberOfBusinessClassSeats :{flight.NumberOfBusinessClassSeats}</li>
-                            <li>Airport :{flight.Airport}</li>
-                            <li>ArrivalAirport :{flight.ArrivalAirport}</li>
-                            <li>TripDuration In Hours:{Math.floor(tripDuration)}</li>
-                            <li>Price :{flight.Price}</li>
-                            <li>BaggageAllowance In Kg :{flight.BaggageAllowance}</li>
-                            <input type='email' placeholder='Your Email...' onChange={e => {
-                                setEmail(e.target.value);
-                            }} />
-                            <input type='number' placeholder='Economy...' onChange={e => {
-                                setNumberOfReservedEconomy(e.target.value);
-                            }} />
-                            <input type='number' placeholder='Business...' onChange={e => {
-                                setNumberOfReservedBusiness(e.target.value);
-                            }} />
-                            <button onClick={() => { BookFlight(flight._id) }}> Book </button>
+
+                            <table>
+                                <tr>
+                                    <th>FlightType </th>
+                                    <th>FlightNumber </th>
+                                    <th>DepartureDateAndTime </th>
+                                    <th>ArrivalDateAndTime </th>
+                                    <th>NumberOfEconomySeats </th>
+                                    <th>NumberOfBusinessClassSeats </th>
+                                    <th>Airport </th>
+                                    <th>ArrivalAirport </th>
+                                    <th>TripDuration In Hours </th>
+                                    <th>Price </th>
+                                    <th>BaggageAllowance In Kg  </th>
+                                </tr>
+
+                                <tr>
+                                    <td>{flight.FlightType}</td>
+                                    <td>{flight.DepartureDateAndTime}</td>
+                                    <td>{flight.ArrivalDateAndTime}</td>
+                                    <td>{flight.NumberOfEconomySeats}</td>
+                                    <td>{flight.NumberOfBusinessClassSeats}</td>
+                                    <td>{flight.Airport}</td>
+                                    <td>{flight.ArrivalAirport}</td>
+                                    <td>{Math.floor(tripDuration)}</td>
+                                    <td>{flight.price}</td>
+                                    <td>{flight.BaggageAllowance}</td>
+                                </tr>
+                            </table>
+                            <br />
+                            <br />
+                            <button className="btn" onClick={() => { BookFlight(flight, flight.Airport, flight.ArrivalAirport, flight.FlightType) }}> Book </button>
+                            <br />
+                            <br />
                         </div>
                     </h3>
                 )
