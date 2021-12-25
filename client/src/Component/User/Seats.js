@@ -5,6 +5,7 @@ import axios from 'axios';
 function Seats() {
     const [EcoSeats, setEcoSeats] = useState([]);
     const [BusSeats, setBusSeats] = useState([]);
+<<<<<<< HEAD
     const [email, setemail] = useState();
     let FlightID;
 
@@ -18,6 +19,18 @@ function Seats() {
                 axios.post('http://localhost:8000/GetFlight', {
                     fid: FlightID,
                     Email: email
+=======
+    let FlightID;
+    const userToken = localStorage.getItem("user-token");
+
+    useEffect(() => {
+        axios.get('http://localhost:8000/GetID')
+            .then((response) => {
+                FlightID = (response.data.F_ID);
+            }).then((err) => {
+                axios.post('http://localhost:8000/GetFlight', {
+                    fid: FlightID,
+>>>>>>> safar
                 }).then((response) => {
                      setEcoSeats(response.data.EcoSeats);
                      setBusSeats(response.data.BusSeats);
@@ -25,6 +38,7 @@ function Seats() {
                     console.log(err);
                 })
             }).catch((err) => {
+<<<<<<< HEAD
                 console.log(err);
             })
     }, []);
@@ -37,6 +51,20 @@ function Seats() {
             classtype: classtype
         }).then((response) => {
             window.location.href = '/Summary';
+=======
+
+            })
+    }, []);
+
+    function clicked(i, e, classtype) {
+        axios.post('http://localhost:8000/SetSeats', {
+            seat: e,
+            number: i,
+            token: userToken,
+            classtype: classtype
+        }).then((response) => {
+            
+>>>>>>> safar
         }).catch(err => {
             console.log(err);
         })
@@ -47,7 +75,10 @@ function Seats() {
         window.location.href = '/Summary';
     }
 
+<<<<<<< HEAD
 console.log(BusSeats)
+=======
+>>>>>>> safar
     return (
         <div>
             <h1> Business Class </h1>
@@ -55,7 +86,11 @@ console.log(BusSeats)
             <div>
                 {
                    
+<<<<<<< HEAD
                    BusSeats.map((e, i) => <span key={i}>{<button className="btn" onClick={() => clicked(i,e, "Business")}> {e} </button>}</span>)
+=======
+                   BusSeats.map((e, i) => <span key={i} >{<button className = "btn" onClick={() => clicked(i,e, "Business")}> {e} </button>}</span>)
+>>>>>>> safar
 
                 }
             </div>
@@ -65,7 +100,11 @@ console.log(BusSeats)
 
             <div>
                 {
+<<<<<<< HEAD
                      EcoSeats.map((e, i) => <span key={i}>{<button className="btn" onClick={() => clicked(i,e, "Economy")} > {e} </button>}</span>)
+=======
+                    EcoSeats.map((e, i) => <span key={i}>{<button className="btn" onClick={() => clicked(i,e, "Economy")} > {e} </button>}</span>)
+>>>>>>> safar
 
                 }
             </div>

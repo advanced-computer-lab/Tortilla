@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+<<<<<<< HEAD
   <head>
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -27,6 +28,34 @@
     -->
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
     <!--
+=======
+
+<head>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200&family=Outfit:wght@200;300&display=swap"
+    rel="stylesheet">
+  <style>
+    body {
+      background-image: url('https://images.hdqwalls.com/wallpapers/white-cube-pattern-4k-bu.jpg');
+      background-position: center;
+    }
+  </style>
+  <meta charset="utf-8" />
+
+  <link rel="icon" href="%PUBLIC_URL%/Mini.png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#000000" />
+  <meta name="description" content="Web site created using create-react-app" />
+  <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+  <!--
+      manifest.json provides metadata used when your web app is installed on a
+      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
+    -->
+  <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+  <!--
+>>>>>>> safar
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.
       Only files inside the `public` folder can be referenced from the HTML.
@@ -35,6 +64,7 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
+<<<<<<< HEAD
     <title>Tortilla airlines</title>
   </head>
   <body>
@@ -56,6 +86,33 @@
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
     <!--
+=======
+  <title>Tortilla airlines</title>
+</head>
+
+<body>
+  <section class="header">
+    <nav>
+      <a href="http://localhost:3000/"><img src="%PUBLIC_URL%/Mini.png"></a>
+      <div class="nav-links">
+        <ul>
+          <li id="displayLogout"><a href="http://localhost:3000/logout">logout</a></li>
+          <li id="displayLog"><a href="http://localhost:3000/login">Sign in</a></li>
+          <li id="displayReg"><a href="http://localhost:3000/register">Sign up</a></li>
+          <li><a href="http://localhost:3000/availableFlights">Book my flight</a></li>
+          <li><a href="http://localhost:3000/userSearch">Search by dates</a></li>
+          <li id="displayReserved"><a href="http://localhost:3000/reservedFlights">My reserved flights</a></li>
+          <li id="displayEditInfo"><a href="http://localhost:3000/editUserInfo">Edit my info</a></li>
+          <li><a href="http://localhost:3000/Summary">Chosen flights</a></li>
+
+        </ul>
+      </div>
+    </nav>
+  </section>
+  <noscript>You need to enable JavaScript to run this app.</noscript>
+  <div id="root"></div>
+  <!--
+>>>>>>> safar
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
 
@@ -65,5 +122,26 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+<<<<<<< HEAD
   </body>
+=======
+</body>
+<script>
+  if (localStorage.getItem('user-token')) {
+    var displayLog = document.getElementById("displayLog");
+    displayLog.style.display = "none";
+    var displayReg = document.getElementById("displayReg");
+    displayReg.style.display = "none";
+  }
+  if (!(localStorage.getItem('user-token'))) {
+    var displayReserved = document.getElementById("displayReserved");
+    displayReserved.style.display = "none";
+    var displayEditInfo = document.getElementById("displayEditInfo");
+    displayEditInfo.style.display = "none";
+    var displayLogout = document.getElementById("displayLogout");
+    displayLogout.style.display = "none";
+  }
+</script>
+
+>>>>>>> safar
 </html>

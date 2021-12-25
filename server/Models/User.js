@@ -10,6 +10,13 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
+<<<<<<< HEAD
+=======
+    Username: {
+        type: String,
+        required: true,
+    },
+>>>>>>> safar
     Password: {
         type: String,
         required: true
@@ -18,14 +25,30 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
+<<<<<<< HEAD
     type: {
         type: String,
+=======
+    telephonenumbers: {
+        type: Array,
+>>>>>>> safar
         required: true
     },
     PassportNumber: {
         type: String,
         required: true
     },
+<<<<<<< HEAD
+=======
+    homeAddress: {
+        type: String,
+        required: true
+    },
+    countryCode: {
+        type: String,
+        required: true
+    },
+>>>>>>> safar
     ReservedFlights: {
         type: Array,
         required: false
@@ -37,6 +60,13 @@ const userSchema = new Schema({
     Seats: {
         type: Array,
         required: false
+<<<<<<< HEAD
+=======
+    },
+    Token: {
+        type: String,
+        required: false
+>>>>>>> safar
     }
 }, { timestamps: true });
 

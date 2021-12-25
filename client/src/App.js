@@ -10,14 +10,39 @@ import UserSearch from './Component/User/UserSearch';
 import ReservedFlights from './Component/User/ReservedFlights';
 import Summary from './Component/User/Summary';
 import Seats from './Component/User/Seats';
+<<<<<<< HEAD
 
 function App() {
 
+=======
+import { useEffect, useState } from 'react';
+import Login from './Component/User/Login';
+import Register from './Component/User/Register';
+import Logout from './Component/User/Logout';
+
+function App() {
+
+  const [isAuth, setIsAuth] = useState(false);
+
+  function Authenticated() {
+    if (localStorage.getItem("user-token") != null) {
+      setIsAuth(true);
+    } else {
+      setIsAuth(false);
+    }
+  }
+
+  useEffect(() => {
+    Authenticated();
+  }, []);
+
+>>>>>>> safar
   return (
     <div className="App">
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<User />} />
+<<<<<<< HEAD
 
           <Route path="/reservedFlights" element={<ReservedFlights />} />
           <Route path="/create" element={<CreateFlight />} />
@@ -29,6 +54,24 @@ function App() {
           <Route path="/Summary" element={<Summary />} />
           <Route path="/Seats" element={<Seats />} />
 
+=======
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/logout" element={<Logout />} />
+
+          {isAuth ? <Route path="/reservedFlights" element={<ReservedFlights />} /> : <Route path="/" element={<User />} />}
+          {isAuth ? <Route path="/editUserInfo" element={<EditUserInfo />} /> : <Route path="/" element={<User />} />}
+
+          <Route path="/userSearch" element={<UserSearch />} />
+          <Route path="/availableFlights" element={<AvailableFlights />} />
+          <Route path="/Summary" element={<Summary />} />
+          <Route path="/Seats" element={<Seats />} />
+
+          <Route path="/admin" element={<Administrator />} />
+          <Route path="/create" element={<CreateFlight />} />
+          <Route path="/search" element={<Search />} />
+
+>>>>>>> safar
         </Routes>
       </BrowserRouter>
     </div>

@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+<<<<<<< HEAD
 import { Link } from 'react-router-dom';
+=======
+>>>>>>> safar
 import './update.css';
 
 function Administrator() {
@@ -58,11 +61,15 @@ function Administrator() {
         <div className='Adminstartor'>
 
             <br />
+<<<<<<< HEAD
             <br /><button className="button" onClick={() => {
                                
                                    window.location.href="/create";
                                 
                             }}> Create flight </button>
+=======
+            <br /><button className="button" onClick={() => {window.location.href="/create"}}> Create flight </button>
+>>>>>>> safar
             <br />
             <br />
             

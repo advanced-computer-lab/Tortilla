@@ -12,7 +12,10 @@ function UserSearch() {
         axios.get('http://localhost:8000/getAllAvailableFlights')
             .then((response) => {
                 setSearchList(response.data);
+<<<<<<< HEAD
                 console.log(response.data)
+=======
+>>>>>>> safar
             }).catch((err) => {
                 console.log(err);
             })
