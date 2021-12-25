@@ -11,24 +11,15 @@ Motivation:
 We are developing this project to learn how to build a functional
 website using
 MERN stack technology and developing a sufficient UI/UX.
-
 Build Status:
-
-Currently the project is still under development it has no bugs or
-errors but it still does not have an authentication system to handle different
- users or
-logging system and until this is done we require user email to
-differentiate
-between users.
+The system is working by now
 
 Code Style:
 
 This project is developed using MERN stack so every page is
 component to
 make it easy to track.
-
 Tech/Framework used:
-
 MERN stack and css . MongoDB as the database. Stripe API
 
 Features:
