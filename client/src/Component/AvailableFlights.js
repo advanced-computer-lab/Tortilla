@@ -119,23 +119,23 @@ function AvailableFlights() {
                 const ArrivalDateAndTime = new Date(flight.ArrivalDateAndTime);
                 const DepartureDateAndTime = new Date(flight.DepartureDateAndTime);
                 const tripDuration = (ArrivalDateAndTime - DepartureDateAndTime) / (1000 * 60 * 60);
+                console.log(tripDuration)
                 return (
                     <h3 key={flight._id}>
                         <div className='list'>
 
                             <table>
                                 <tr>
-                                    <th>FlightType </th>
-                                    <th>FlightNumber </th>
+                                    <th>Flight Type </th>
                                     <th>DepartureDateAndTime </th>
                                     <th>ArrivalDateAndTime </th>
-                                    <th>NumberOfEconomySeats </th>
-                                    <th>NumberOfBusinessClassSeats </th>
+                                    <th>Economy Seats </th>
+                                    <th>Business Seats </th>
                                     <th>Airport </th>
-                                    <th>ArrivalAirport </th>
-                                    <th>TripDuration In Hours </th>
+                                    <th>Arrival Airport </th>
+                                    <th>Trip Duration In Hours </th>
                                     <th>Price </th>
-                                    <th>BaggageAllowance In Kg  </th>
+                                    <th>Baggage Allowance In Kg  </th>
                                 </tr>
 
                                 <tr>
@@ -147,7 +147,7 @@ function AvailableFlights() {
                                     <td>{flight.Airport}</td>
                                     <td>{flight.ArrivalAirport}</td>
                                     <td>{Math.floor(tripDuration)}</td>
-                                    <td>{flight.price}</td>
+                                    <td>{flight.Price}</td>
                                     <td>{flight.BaggageAllowance}</td>
                                 </tr>
                             </table>

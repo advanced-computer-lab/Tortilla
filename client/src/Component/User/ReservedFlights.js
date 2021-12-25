@@ -15,7 +15,7 @@ function ReservedFlights() {
             .then((res) => {
                 setReservedFlights(res.data.flights);
                 setSeatsList(res.data.Seats);
-                if (!reservedFlights.length) {
+                if (!res.data.flights) {
                     setMessage('No flights yet to show');
                 }
             })
@@ -98,16 +98,15 @@ function ReservedFlights() {
                         <table className="listTable">
                             <tr>
                                 <th>Flight Type </th>
-                                <th>FlightNumber </th>
                                 <th>DepartureDateAndTime </th>
                                 <th>ArrivalDateAndTime</th>
-                                <th>NumberOfEconomySeats</th>
-                                <th>NumberOfBusinessClassSeats</th>
+                                <th>Economy Seats</th>
+                                <th>Business Seats</th>
                                 <th>Airport </th>
-                                <th>ArrivalAirport </th>
-                                <th>TripDuration In Hours</th>
+                                <th>Arrival Airport </th>
+                                <th>Trip Duration In Hours</th>
                                 <th>Price</th>
-                                <th>BaggageAllowance In Kg </th>
+                                <th>Baggage Allowance In Kg </th>
                             </tr>
                             <tr>
                                 <td>{flight.FlightType} </td>

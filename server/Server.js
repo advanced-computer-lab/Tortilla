@@ -7,9 +7,11 @@ const user = require('./Models/User');
 const flight = require('./Models/Flight');
 const nodemailer = require('nodemailer')
 const ObjectId = require('mongodb').ObjectId;
-const nodeoutlook = require('nodejs-nodemailer-outlook')
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+
+const stripe = require("stripe")("sk_test_51KAJHLC9bIWLACdlQPoQeDwEYIXGm2o07vrxX51LS7pi2xK661KpVG7pSfYixVTjTrgAdRvqw3fbDz7Z8mZ61cSb005yR8SCQ0");
+const uuid = require("uuid").v4;
 
 var F_ID = 0;
 
@@ -20,6 +22,28 @@ mongoose.connect(process.env.MongoURI, { useNewUrlParser: true, useUnifiedTopolo
   .then(result => console.log("MongoDB is now connected"))
   .catch(err => console.log(err));
 
+//Payment
+app.post('/payment', (req, res) => {
+  const { token, amount } = req.body;
+  const idempotencyKey = uuid();
+
+  return (stripe.customers.create({
+    email: token.email,
+    source: token.id
+  }).then(customer => {
+    stripe.charges.create({
+      amount: amount*100,
+      currency: "usd",
+      customer: customer.id,
+      receipt_email: token.email,
+
+    }, { idempotencyKey: idempotencyKey })
+  }).then(result => res.status(200).json(result))
+    .catch(err =>
+      console.log(err)
+    )
+  )
+});
 
 //Authentication
 app.post('/register', async (req, res) => {
@@ -75,9 +99,9 @@ app.put('/changePassword', async (req, res) => {
   var newPassword = req.body.NewPassword;
   const userToken = req.body.token;
 
-  const userExist = await user.findOne({ Token: userToken  });
+  const userExist = await user.findOne({ Token: userToken });
 
-  if(!bcrypt.compareSync(oldPassword, userExist.Password))
+  if (!bcrypt.compareSync(oldPassword, userExist.Password))
     return res.status(403).send({ message: 'false' });
 
   const salt = await bcrypt.genSalt(10);
@@ -365,6 +389,15 @@ app.post('/addFlightToReserved', async (req, res) => {
 
   const records = theUser.ReservedFlights;
 
+  const r = theUser.ChosenFlights;
+
+  for (var i = 0; i < r.length; i++) {
+    if (ReservedFlightId == r[i]._id) {
+      r.splice(i, 1);
+      await theUser.save();
+    }
+  }
+
   if (ReservedFlight) {
     records.push(ReservedFlight);
     await theUser.save();
@@ -386,7 +419,6 @@ app.get('/getAllChosenFlights:userToken', async (req, res) => {
   return res.status(200).send(data);
 });
 
-//Seats not mentioned 
 app.get('/getReservedFlights:userToken', async (req, res) => {
   const userToken = req.params.userToken;
   const theUser = await user.findOne({ Token: userToken });

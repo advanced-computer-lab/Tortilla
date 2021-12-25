@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
 import './update.css';
 
 function Administrator() {
@@ -58,11 +57,7 @@ function Administrator() {
         <div className='Adminstartor'>
 
             <br />
-            <br /><button className="button" onClick={() => {
-                               
-                                   location.href="/create";
-                                
-                            }}> Create flight </button>
+            <br /><button className="button" onClick={() => {window.location.href="/create"}}> Create flight </button>
             <br />
             <br />
             

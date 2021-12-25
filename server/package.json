@@ -19,6 +19,8 @@
     "mongodb": "^4.1.4",
     "mongoose": "^6.1.2",
     "nodejs-nodemailer-outlook": "^1.2.4",
-    "nodemailer": "^6.7.2"
+    "nodemailer": "^6.7.2",
+    "stripe": "^8.195.0",
+    "uuid": "^8.3.2"
   }
 }

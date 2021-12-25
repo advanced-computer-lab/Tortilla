@@ -11,7 +11,7 @@ function Seats() {
     useEffect(() => {
         axios.get('http://localhost:8000/GetID')
             .then((response) => {
-                FlightID= (response.data.F_ID);
+                FlightID = (response.data.F_ID);
             }).then((err) => {
                 axios.post('http://localhost:8000/GetFlight', {
                     fid: FlightID,

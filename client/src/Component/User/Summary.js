@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import StripeCheckout from 'react-stripe-checkout';
 
 function Summary() {
+    let amount;
+    let fId;
 
     const [list, setList] = useState([]);
     const [seatsList, setSeatsList] = useState([]);
@@ -98,15 +101,16 @@ function Summary() {
                 }))
 
                 axios.post('http://localhost:8000/sendEmail', { id: id, token: userToken })
-                .then((res) => {
-                    setConfirmMessage('Confirmed, Please check your email');
-                })
+                    .then((res) => {
+                        setConfirmMessage('Confirmed, Please check your email');
+                    })
             }).catch((err) => {
                 console.log(err);
             })
         } else {
-            window.location.href = '/login';
+            window.location.href = '/login'
         }
+
     }
 
     function removeSeat(seat, classtype, flightId) {
@@ -122,12 +126,39 @@ function Summary() {
         })
     }
 
+    const makePayment = (token) => {
+        const body = {
+            token,
+            amount
+        }
+        const headers = {
+            "Content-Type": "application/json"
+        }
+        return fetch('http://localhost:8000/payment', {
+            method: "POST",
+            headers,
+            body: JSON.stringify(body)
+        }).then(response => {
+            confirm(fId);
+        })
+            .catch((err) => {
+                console.log(err);
+            })
+
+    }
+
+    function f(p, f) {
+        fId = f;
+        amount = p;
+    }
+
     return (
         <div className="Summary">
             <h1> My chosen flights </h1>
             <br />
             <br />
             <h2> {ErrorMessage} </h2>
+            <h2>{ConfirmMessage}</h2>
             <div>
                 <table>
                     <tbody>
@@ -143,21 +174,19 @@ function Summary() {
                                     <div key={flight._id}>
                                         <tr id='list'>
                                             <th>Flight Type</th>
-                                            <th>Flight Number</th>
                                             <th>Departure Date</th>
                                             <th>Arrival Date</th>
                                             <th>Economy Class Seats</th>
                                             <th>Business Class Seats </th>
                                             <th>Departure Airport</th>
                                             <th>Arrival Airport</th>
-                                            <th>TripDuration In Hours</th>
+                                            <th>Trip Duration In Hours</th>
                                             <th>Price </th>
                                             {/* <td>Total Ticket Price <br /> {totalPrice}</td> */}
                                             <th>Confirmation Number</th>
                                         </tr>
                                         <tr>
                                             <td>{flight.FlightType}</td>
-                                            <td>{flight.FlightNumber}</td>
                                             <td> {flight.DepartureDateAndTime}</td>
                                             <td> {flight.ArrivalDateAndTime}</td>
                                             <td> {flight.NumberOfEconomySeats}</td>
@@ -192,8 +221,26 @@ function Summary() {
                                         </td>
                                     </div>
                                     <button className="btn" onClick={() => chooseSeats(flight._id)}> Choose my seats  </button>
-                                    <button className="btn" onClick={() => confirm(flight._id)}> Confirm Your Book Now  </button>
-                                    <h2>{ConfirmMessage}</h2>
+                                    {/* <button className="btn" onClick={() => confirm(flight._id)}> Confirm Your Book Now  </button> */}
+
+
+                                    {
+                                        userToken ?
+                                            <StripeCheckout
+                                                stripeKey='pk_test_51KAJHLC9bIWLACdl5WPmLcLUvAew6GJZJpXJIViZTcx1puxUwGD6umKVJXqFllkveMd6F2OZ4lDZ0r2lEL1kDODb00wVfnluFx'
+                                                token={makePayment}
+                                                name="Pay Now"
+                                                panelLabel={"payment"}
+                                                currency="USD"
+                                                amount={flight.Price * 100}
+
+                                            >
+                                                <button onClick={() => f(flight.Price, flight._id)} className="btn" > Pay Now  </button>
+                                            </StripeCheckout> : null
+                                    }
+
+
+
                                     <button className="btn" onClick={() => { cancelReservation(flight._id) }}> Cancel Book </button>
                                 </tr>
                             )
