@@ -61,22 +61,29 @@ function Administrator() {
             <br />
             <br />
             
-            
+            <labe>Search Flight</labe>
+             <br />
             <input className ="SearchBox"type='text' placeholder='Search Flight...' onChange={e => {
                 setSearchFlight(e.target.value);
             }} />
             <br />
             <br />
+            <labe>Search Airport</labe>
+             <br />
             <input className ="SearchBox" type='text' placeholder='Search Airport...' onChange={e => {
                 setSearchAirport(e.target.value);
             }} />
             <br />
             <br />
+            <labe>Search Economy</labe>
+             <br />
             <input className ="SearchBox" type='text' placeholder='Search Economy...' onChange={e => {
                 setSearchEconomy(e.target.value);
             }} />
             <br />
             <br />
+            <labe>Search Business</labe>
+             <br />
             <input className ="SearchBox" type='text' placeholder='Search Business...' onChange={e => {
                 setSearchBusiness(e.target.value);
             }} />
@@ -160,24 +167,30 @@ function Administrator() {
 
 <br />
                         <br />
+                        <labe>New flight number</labe>
+             <br />
                             <input className ="SearchBox" type='text' placeholder='New flight number...' onChange={e => {
                                 setFlightNumberUpdate(e.target.value);
                             }} />
 
 <br />
                         <br />
+                        <labe>NumberOfEconomySeats</labe>
+             <br />
                             <input className ="SearchBox" type='text' placeholder='NumberOfEconomySeats...' onChange={e => {
                                 setNumberOfEconomySeatsUpdate(e.target.value);
                             }} />
                         <br />
                         <br />
-
+                        <labe>NumberOfBusinessClassSeats</labe>
+             <br />
                             <input className ="SearchBox" type='text' placeholder='NumberOfBusinessClassSeats...' onChange={e => {
                                 setNumberOfBusinessClassSeatsUpdate(e.target.value);
                             }} />
                         <br />
                         <br />
-
+                        <labe>Airport</labe>
+             <br />
                             <input className ="SearchBox" type='text' placeholder='Airport...' onChange={e => {
                                 setAirportUpdate(e.target.value);
                             }} />

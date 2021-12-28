@@ -42,23 +42,37 @@ function Register() {
             <h1>Register</h1>
             <br />
             <br />
+            <labe>Email</labe>
+            <br />
             <input className="SearchBox" type="email" placeholder="Email..." onChange={(e) => setEmail(e.target.value)} />
             <br />
+            <br />
+            <labe>First Name</labe>
             <br />
             <input className="SearchBox" type="text" placeholder="First Name..." onChange={(e) => setfirstName(e.target.value)} />
             <br />
             <br />
+            <labe>Last Name</labe>
+            <br />
             <input className="SearchBox" type="text" placeholder="Last Name..." onChange={(e) => setlastName(e.target.value)} />
             <br />
+            <br />
+            <labe>Passport Number</labe>
             <br />
             <input className="SearchBox" type="text" placeholder="Passport Number..." onChange={(e) => setPassportNumber(e.target.value)} />
             <br />
             <br />
+            <labe>Home Address</labe>
+            <br />
             <input className="SearchBox" type="text" placeholder="Home Address..." onChange={(e) => setHomeAddress(e.target.value)} />
             <br />
             <br />
+            <labe>Country Code</labe>
+            <br />
             <input className="SearchBox" type="text" placeholder="Country Code..." onChange={(e) => setCountryCode(e.target.value)} />
             <br />
+            <br />
+            <labe>Telephone Number</labe>
             <br />
             <input className="SearchBox" type="text" placeholder="Telephone Number..." onChange={(e) => setTelephonenumbers(e.target.value)} />
             <br />
@@ -67,8 +81,12 @@ function Register() {
             <br />
             <br />
             <br />
+            <labe>Username</labe>
+            <br />
             <input className="SearchBox" type="text" placeholder="Username..." onChange={(e) => setUsername(e.target.value)} />
             <br />
+            <br />
+            <labe>Password</labe>
             <br />
             <input className="SearchBox" type="text" placeholder="Password..." onChange={(e) => setPassword(e.target.value)} />
             <br />

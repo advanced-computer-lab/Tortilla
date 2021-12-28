@@ -227,10 +227,10 @@ function Summary() {
                                     {
                                         userToken ?
                                             <StripeCheckout
-                                                stripeKey='pk_test_51KAJHLC9bIWLACdl5WPmLcLUvAew6GJZJpXJIViZTcx1puxUwGD6umKVJXqFllkveMd6F2OZ4lDZ0r2lEL1kDODb00wVfnluFx'
+                                                stripeKey='pk_test_51KAJHLC9bIWLACdl5rsJxK9CzRRAVtRKgxOreWaYHvk7WX8R1mZZhRKQ5efT9SbnBCt94vG9roc7T4XC3NkSFLmx00LbRdzK5Q'
                                                 token={makePayment}
                                                 name="Pay Now"
-                                                panelLabel={"payment"}
+                                                
                                                 currency="USD"
                                                 amount={flight.Price * 100}
 

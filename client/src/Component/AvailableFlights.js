@@ -82,18 +82,22 @@ function AvailableFlights() {
 
             <br />
             <br />
+            <label>Search Number Of Passengers</label>
+            <br />
             <input className="SearchBox" type='text' placeholder='Search Number Of Passengers...' onChange={e => {
                 setSearchNumberOfPassengers(e.target.value);
             }} />
             <br />
             <br />
-
+            <label>Search Departure Airport</label>
+            <br />
             <input className="SearchBox" type='text' placeholder='Search Departure Airport...' onChange={e => {
                 setSearchAirport(e.target.value);
             }} />
             <br />
             <br />
-
+            <label>Search Arrival Airport</label>
+            <br />
             <input className="SearchBox" type='text' placeholder='Search Arrival Airport...' onChange={e => {
                 setSearchArrivalAirport(e.target.value);
             }} />

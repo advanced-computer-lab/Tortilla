@@ -14,6 +14,8 @@ import { useEffect, useState } from 'react';
 import Login from './Component/User/Login';
 import Register from './Component/User/Register';
 import Logout from './Component/User/Logout';
+import Change from './Component/User/Change';
+import ChangePassword from './Component/User/ChangePassword';
 
 function App() {
 
@@ -31,6 +33,7 @@ function App() {
     Authenticated();
   }, []);
 
+  
   return (
     <div className="App">
       <BrowserRouter>
@@ -42,11 +45,14 @@ function App() {
 
           {isAuth ? <Route path="/reservedFlights" element={<ReservedFlights />} /> : <Route path="/" element={<User />} />}
           {isAuth ? <Route path="/editUserInfo" element={<EditUserInfo />} /> : <Route path="/" element={<User />} />}
+          {isAuth ? <Route path="/Seats" element={<Seats />} /> : <Route path="/" element={<User />} />}
+          {isAuth ? <Route path="/change" element={<Change />} /> : <Route path="/" element={<User />} />}
+          {isAuth ? <Route path="/changepassword" element={<ChangePassword />} /> : <Route path="/" element={<User />} />}
+
 
           <Route path="/userSearch" element={<UserSearch />} />
           <Route path="/availableFlights" element={<AvailableFlights />} />
           <Route path="/Summary" element={<Summary />} />
-          <Route path="/Seats" element={<Seats />} />
 
           <Route path="/admin" element={<Administrator />} />
           <Route path="/create" element={<CreateFlight />} />

@@ -15,14 +15,14 @@ function ReservedFlights() {
             .then((res) => {
                 setReservedFlights(res.data.flights);
                 setSeatsList(res.data.Seats);
-                if (!res.data.flights) {
+                if (!res.data.flights.length) {
                     setMessage('No flights yet to show');
                 }
             })
             .catch((err) => {
                 setMessage('No flights yet to show');
             })
-    }, [])
+    }, []);
 
     function cancelReservation(id) {
         axios.post('http://localhost:8000/cancelReservedFlight', { id: id, token: userToken })
@@ -81,6 +81,23 @@ function ReservedFlights() {
         })
     }
 
+    function changeFlight(id, price, arrAir, depAir, type){
+        axios.post('http://localhost:8000/PostChangeFlight', {
+            fid: id,
+            fprice:price,
+            farrAir:arrAir,
+            fdepAir:depAir,
+            ftype:type,
+            token: userToken
+        }).then(() => {
+            window.location.href = '/change';
+        }).catch((err) => {
+            console.log(err);
+        })
+        
+    }
+
+
     return (
         <div>
             <h1>Your Reserved Flights</h1>
@@ -95,8 +112,9 @@ function ReservedFlights() {
                 const tripDuration = (ArrivalDateAndTime - DepartureDateAndTime) / (1000 * 60 * 60);
                 return (
                     <h3 key={flight._id}>
-                        <table className="listTable">
-                            <tr>
+                        <table className="list">
+                        <div key={flight._id}>
+                            <tr id="list">
                                 <th>Flight Type </th>
                                 <th>DepartureDateAndTime </th>
                                 <th>ArrivalDateAndTime</th>
@@ -142,8 +160,7 @@ function ReservedFlights() {
                                 }
                             })}
                             </td>
-                            <br />
-                            <br />
+                            </div>
                             <button className="button" onClick={() => {
                                 var result = window.confirm("Are You Sure Want to cancel?");
                                 if (result) {
@@ -152,6 +169,9 @@ function ReservedFlights() {
                             }}> Cancel Reservation </button>
                             <button className="button" onClick={() => { sendEmail(flight._id) }}> Send me email with reservation details</button>
                             <button className="button" onClick={() => { chooseSeats(flight._id) }}> Choose another Seat </button>
+
+
+                            <button className="button" onClick={() => { changeFlight(flight._id,flight.Price,flight.ArrivalAirport,flight.Airport,flight.FlightType) }}> Change Flight </button>
                         </table>
                     </h3>
                 )

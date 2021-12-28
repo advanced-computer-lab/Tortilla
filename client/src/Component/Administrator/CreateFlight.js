@@ -67,36 +67,50 @@ function CreateFlight() {
                 }} />
                 <br />
                 <br />
+                <labe>FlightNumber</labe>
+             <br />
                 <input className = "SearchBox" type='text' placeholder='FlightNumber...' onChange={e => {
                     setFlightNumber(e.target.value);
                 }} />
                 <br />
                 <br />
+                <labe>NumberOfEconomySeats</labe>
+             <br />
                 <input className = "SearchBox" type='text' placeholder='NumberOfEconomySeats...' onChange={e => {
                     setNumberOfEconomySeats(e.target.value);
                 }} />
                 <br />
                 <br />
+                <labe>NumberOfBusinessClassSeats</labe>
+             <br />
                 <input className = "SearchBox" type='text' placeholder='NumberOfBusinessClassSeats...' onChange={e => {
                     setNumberOfBusinessClassSeats(e.target.value);
                 }} />
                 <br />
                 <br />
+                <labe>Departure Airport</labe>
+             <br />
                 <input className = "SearchBox" type='text' placeholder='Departure Airport...' onChange={e => {
                     setAirport(e.target.value);
                 }} />
                 <br />
                 <br />
+                <labe>Arrival Airport</labe>
+             <br />
                 <input className = "SearchBox" type='text' placeholder='Arrival Airport...' onChange={e => {
                     setArrivalAirport(e.target.value);
                 }} />
                 <br />
                 <br />
+                <labe>Price</labe>
+             <br />
                 <input className = "SearchBox" type='text' placeholder='Price...' onChange={e => {
                     setPrice(e.target.value);
                 }} />
                 <br />
                 <br />
+                <labe>Baggage Allowance</labe>
+             <br />
                 <input className = "SearchBox" type='text' placeholder='Baggage Allowance...' onChange={e => {
                     setBaggageAllowance(e.target.value);
                 }} />

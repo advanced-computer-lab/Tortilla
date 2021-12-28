@@ -29,8 +29,12 @@ function Login() {
             <h1>Login</h1>
             <br/>
             <br/>
+            <labe>Email</labe>
+            <br />
             <input className="SearchBox" type="email" placeholder="Email..." onChange={(e) => setEmail(e.target.value)} />
             <br />
+            <br />
+            <labe>Password</labe>
             <br />
             <input className="SearchBox" type="text" placeholder="Password..." onChange={(e) => setPassword(e.target.value)} />
             <br />

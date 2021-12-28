@@ -10,10 +10,20 @@ const ObjectId = require('mongodb').ObjectId;
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
-const stripe = require("stripe")("sk_test_51KAJHLC9bIWLACdlQPoQeDwEYIXGm2o07vrxX51LS7pi2xK661KpVG7pSfYixVTjTrgAdRvqw3fbDz7Z8mZ61cSb005yR8SCQ0");
+const stripe = require("stripe")("sk_test_51KAJHLC9bIWLACdlPpf5oMGI1LIFKLMbW8XhJOCuesujmrCsCzG7TgBSUalIPwB9YRodTI7W3cLKHJVVakc2OEYa00lWXxZHWG");
 const uuid = require("uuid").v4;
 
 var F_ID = 0;
+
+/// change
+var cId = 0;
+var cType = "";
+var cArr = "";
+var cDep = "";
+var cPrice = 0;
+var token="";
+
+
 
 app.use(express.json());
 app.use(cors());
@@ -21,6 +31,179 @@ app.use(cors());
 mongoose.connect(process.env.MongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(result => console.log("MongoDB is now connected"))
   .catch(err => console.log(err));
+
+
+  app.post('/BookChangeFlight', async(req,res) => {
+    const OldID = cId; 
+    const newID = req.body.newID;
+    const userToken = req.body.token;
+    const amount = req.body.amount;
+    console.log(newID);
+    const User = await user.findOne({ Token: userToken });
+
+    if(amount > 0){    
+      //const userEmail = User.Email;
+    
+      const transporter = nodemailer.createTransport({
+        service: "hotmail",
+        auth: {
+          user: "ACL.900@outlook.com",
+          pass: "acl123456"
+        },
+      });
+    
+      const mailOptions = {
+        from: 'ACL.900@outlook.com',
+        to: "ACL.600@outlook.com",
+        subject: 'This is a cancelation mail',
+        text: `Hello user, we want to infrom you that your flight has been changed and you pay the difference amount between the two flights which is equal to ${amount}`
+      }
+    
+      transporter.sendMail(mailOptions, function (err, info) {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log('Email sent : ' + info.response);
+          res.status(200).send({ message: 'Email sent' });
+        }
+      })
+    }else if(amount < 0){    
+      //const userEmail = User.Email;
+    
+      const transporter = nodemailer.createTransport({
+        service: "hotmail",
+        auth: {
+          user: "ACL.900@outlook.com",
+          pass: "acl123456"
+        },
+      });
+    
+      const mailOptions = {
+        from: 'ACL.900@outlook.com',
+        to: "ACL.600@outlook.com",
+        subject: 'This is a cancelation mail',
+        text: `Hello user, we want to infrom you that your flight has been canceled. Amount to be refunded ${amount}`
+      }
+    
+      transporter.sendMail(mailOptions, function (err, info) {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log('Email sent : ' + info.response);
+          res.status(200).send({ message: 'Email sent' });
+        }
+      })
+    }else{    
+      //const userEmail = User.Email;
+    
+      const transporter = nodemailer.createTransport({
+        service: "hotmail",
+        auth: {
+          user: "ACL.900@outlook.com",
+          pass: "acl123456"
+        },
+      });
+    
+      const mailOptions = {
+        from: 'ACL.900@outlook.com',
+        to: "ACL.600@outlook.com",
+        subject: 'This is a cancelation mail',
+        text: `Hello user, we want to infrom you that your flight has been changed and no amount to be refunded or paid`
+      }
+    
+      transporter.sendMail(mailOptions, function (err, info) {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log('Email sent : ' + info.response);
+          res.status(200).send({ message: 'Email sent' });
+        }
+      })
+    }
+   
+    const fOld = await flight.findOne({ _id: ObjectId(OldID) });
+
+    const fNew = await flight.findOne({ _id: ObjectId(newID) });
+
+    const theUser = await user.findOne({ Token: token });
+
+    const records = theUser.ReservedFlights;
+
+  for (var i = 0; i < records.length; i++) {
+    if (OldID == records[i]._id) {
+      console.log("ddd");
+      theUser.ReservedFlights.splice(i, 1);
+      await theUser.save();
+    }
+  }
+
+  const len = theUser.Seats.length;
+
+  const index = [];
+
+  for (var i = 0; i < len; i++) {
+    if (OldID == theUser.Seats[i].id) {
+      index.push(theUser.Seats[i]);
+      if (theUser.Seats[i].classtype === "Business") {
+        fOld.BusSeats.push(theUser.Seats[i].Seat);
+      }
+      if (theUser.Seats[i].classtype === "Economy") {
+        fOld.EcoSeats.push(theUser.Seats[i].Seat);
+      }
+    }
+  }
+  await fOld.save();
+
+  for (var i = 0; i < index.length; i++) {
+    const place = theUser.Seats.indexOf(index[i])
+    theUser.Seats.splice(place, 1);
+  }
+
+  records.push(fNew);
+
+  await theUser.save();
+
+
+  return res.status(200).send({ message: 'true' });
+
+
+  });
+
+  app.post('/PostChangeFlight',async (req, res) => {
+   
+     cId = req.body.fid;
+     cType = req.body.ftype;
+     cArr = req.body.farrAir;
+     cDep = req.body.fdepAir;
+     cPrice = req.body.fprice;
+     token =req.body.token;
+
+    return res.status(201).send({ message: 'true' });
+
+  });
+
+  app.get('/GetChangeFlight', async(req, res) => {
+   
+   const flights = await flight.find( { FlightType: cType, ArrivalAirport: cArr, Airport: cDep  });
+
+   const myFlights=[];
+   for(let i =0;i<flights.length;i++){
+    if(flights[i]._id+""!==ObjectId(cId)+""){
+      myFlights.push(flights[i]);
+    }
+   }
+
+   const data ={
+     id: cId,
+    OldPrice:cPrice,
+    flights:myFlights
+  }
+
+    return res.status(200).send(data);
+
+  });
+  
+
 
 //Payment
 app.post('/payment', (req, res) => {
@@ -325,7 +508,6 @@ app.post('/createFlight', async (req, res) => {
     EcoSeats: Eseats
   }
 
-  console.log();
   const flightNumber = await flight.findOne({ FlightNumber });
   const airport = await flight.findOne({ Airport });
 
